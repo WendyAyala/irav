@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>Grupo-Atlas:MENU</title>
+
+	<style type="text/css">
+@charset "utf-8";
+/* CSS default de las paginas */
+body {
+	margin: 0px;
+	font-family: Lucida Grande, Lucida Sans, Arial, Helvetica, sans-serif;
+	font-size: 80%;
+	padding: 0;
+	color: #000;
+	height: 100vh;
+	width: 100%;
+}
+
+a:link, a:visited, a:hover, a:active {
+	text-decoration: none;
+	font-weight: 800;
+	color: #F60;
+}
+
+header a:link, a:visited, a:hover, a:active {
+	text-decoration: none;
+	font-weight: 100;
+	color: #F90;
+}
+
+img {
+	border-style: none;
+}
+
+/*======== LAYOUT =====================*/
+header {
+	/*width: 100%;*/
+	color: #fff;
+	background-color: #333;
+	border-bottom: 1px solid #000;
+	background-image: url(/gatlas/resources/img/img_menu.png);
+	background-repeat: no-repeat;
+	background-position: 5px 5px;;
+	background-size: 36px 36px;
+	height: 30px;
+	padding-top: 15px;
+	padding-left: 50px;
+}
+
+header .usuario {
+	float: right;
+	width: 220px;
+	margin-top: -30px;
+	padding: 0px;
+	padding-top: 5px;
+}
+
+header a:link, a:visited, a:hover, a:active {
+	text-decoration: none;
+	font-weight: 100;
+	color: #F90;
+}
+
+.content {
+	margin-left: 0px;
+	margin-right: 0px;
+	border: #CCC 1px solid;
+	height: 93vh;;
+	padding-left: 5px;
+	padding-right: 5px;
+	overflow: scroll;
+}
+
+section {
+	margin: 15px auto;
+	border: #666 solid 0px;
+	background-color: #F4F4F4;
+	width: 700px;
+	/*height: 700px;*/
+	min-height: 670px;
+	border-radius: 5px;
+	/*		
+				background-image:url(/gatlas/resources/img/menu_principal.png);
+				background-repeat:no-repeat;
+				background-position:5px 0px;
+				background-size: 96px 96px;
+				*/
+}
+
+section .titulo {
+	margin-top: 40px;
+	margin-left: 110px;
+	padding-bottom: 5px;
+	width: 80%;
+	border-bottom: #900 solid 2px;
+	font-size: 120%;
+	margin-bottom: 35px;
+}
+
+section article {
+	border: #666 solid 0px;
+	margin: 0px 10px 10px 10px;
+	height: 340px;
+}
+
+.tbl_menu_principal {
+	width: 100%;
+	/*height:100%;*/
+}
+
+.tbl_menu_principal td {
+	margin: 0px;
+	padding: 0px;
+}
+
+.opcionMenu {
+	border-radius: 4px;
+	width: 90px;
+	height: 80px;
+	background-color: #FFF;
+	vertical-align: bottom;
+	text-align: center;
+	border: #bbb 1px solid;
+	margin-top: 5px;
+	font-size: 11px;
+}
+
+.opcionMenu p {
+	margin: 0px;
+	padding: 0px;
+}
+
+.opcionMenuInactiva {
+	border-radius: 4px;
+	width: 90px;
+	height: 80px;
+	background-color: inherit;
+	margin-top: 5px;
+}
+
+.submodulo {
+	text-align: left;
+	font-style: normal;
+	border-bottom: #5f5b5b solid 1px;
+	font-size: 12px;
+	padding-bottom: 5px;
+	color: #ff7800;
+}
+</style>
+
+</h:head>
+
+<body>
+
+	<header>
+		<p style="margin: 0px; padding: 0px;">Biblioteca: MENU PRINCIPAL</p>
+		<div class="usuario">
+			<p style="margin: 0px; padding: 0px; color: #CCC;">
+				<h:outputText value="#{sistemaController.nombreUsuario}" />
+			</p>
+			<p style="margin: 0px; padding: 0px;">
+				<a
+					href="#{facesContext.externalContext.request.contextPath}/index.jsp">sing
+					out</a>
+			</p>
+		</div>
+	</header>
+
+	<section>
+
+		<article>
+
+			<p:menu>
+				
+				<p:submenu label="Usuario">
+					<p:menuitem value="External" url="http://www.primefaces.org"
+						icon="ui-icon-home" />
+					<p:menuitem value="Internal" outcome="/paginas/usuario.jsf"
+						icon="ui-icon-star" />
+				</p:submenu>
+			</p:menu>
+
+			<table style="cellpadding: 2px; cellspacing: 4px; border: 0;"
+				class="tbl_menu_principal">
+
+				<tr>
+					<td colspan="7" class="submodulo">Parametrización</td>
+				</tr>
+				<tr>
+					<td>
+						<div class="opcionMenuInactiva"></div>
+					</td>
+					<td>
+						<div class="opcionMenu">
+							<h:outputLink
+								value="#{facesContext.externalContext.request.contextPath}#{mainPageController.moduloParametros.urlSistema}"
+								target="_blank">
+								<img src="../resources/img/mn_parametros.png" alt="Parámetros"
+									width="48" height="48" />
+							</h:outputLink>
+							<p>Usuario</p>
+						</div>
+					</td>
+					<td>
+						<div class="opcionMenu"></div>
+					</td>
+					<td>
+						<div class="opcionMenuInactiva"></div>
+					</td>
+					<td>
+						<div class="opcionMenuInactiva"></div>
+					</td>
+					<td>
+						<div class="opcionMenuInactiva"></div>
+					</td>
+					<td>
+						<div class="opcionMenuInactiva"></div>
+					</td>
+
+
+				</tr>
+			</table>
+
+
+
+
+			<table style="cellpadding: 2px; cellspacing: 4px; border: 0;"
+				class="tbl_menu_principal">
+
+				<tr>
+					<td colspan="7" class="submodulo">Financiero</td>
+				</tr>
+				<tr>
+					<td>
+						<div class="opcionMenuInactiva"></div>
+					</td>
+					<td>
+						<div class="opcionMenu">
+
+							<h:outputLink
+								value="#{facesContext.externalContext.request.contextPath}#{mainPageController.liquidacion.urlSistema}"
+								target="_blank"
+								disabled="#{not mainPageController.liquidacion.acceso}">
+								<img src="../resources/img/mn_liquidacion.png"
+									alt="Adminstración liquidación OT" width="48" height="48" />
+							</h:outputLink>
+							<p>Liquidación</p>
+						</div>
+					</td>
+					<td>
+						<div class="opcionMenuInactiva"></div>
+					</td>
+					<td>
+						<div class="opcionMenuInactiva"></div>
+					</td>
+					<td>
+						<div class="opcionMenuInactiva"></div>
+					</td>
+					<td>
+						<div class="opcionMenuInactiva"></div>
+					</td>
+					<td>
+						<div class="opcionMenuInactiva"></div>
+					</td>
+
+				</tr>
+			</table>
+			<!-- 
+				<table cellpadding="2px" cellspacing="4px" border="0px"
+				class="tbl_menu_principal">
+
+				<tr>
+					<td colspan="7" class="submodulo">Requisición</td>
+				</tr>
+				<tr>
+					<td>
+						<div class="opcionMenuInactiva"></div>
+					</td>
+					<td>
+						<div class="opcionMenu">
+
+							<h:outputLink
+								value="#{facesContext.externalContext.request.contextPath}#{mainPageController.reqRegistro.urlSistema}"
+								target="_blank"
+								disabled="#{not mainPageController.reqRegistro.acceso}">
+								<img src="../resources/img/mn_liquidacion.png"
+									alt="Registro de Requisiciones" width="48" height="48" />
+							</h:outputLink>
+							<p>Registro</p>
+						</div>
+					</td>
+					<td>
+						<div class="opcionMenuInactiva"></div>
+					</td>
+					<td>
+						<div class="opcionMenuInactiva"></div>
+					</td>
+					<td>
+						<div class="opcionMenuInactiva"></div>
+					</td>
+					<td>
+						<div class="opcionMenuInactiva"></div>
+					</td>
+					<td>
+						<div class="opcionMenuInactiva"></div>
+					</td>
+				</tr>
+			</table>
+
+				
+			 -->
+
+		</article>
+
+	</section>
+	<br />
+
+</body>
+
+
+</html>

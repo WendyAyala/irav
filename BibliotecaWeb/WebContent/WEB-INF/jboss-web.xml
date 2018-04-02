@@ -1,0 +1,7 @@
+<jboss-web>
+
+	<!-- contexto -->
+	<context-root>biblio</context-root>
+
+	
+</jboss-web>

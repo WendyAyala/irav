@@ -1,0 +1,49 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+	<!-- titulo princpal del sistema -->
+	<title><ui:insert name="titulo">
+		</ui:insert></title>
+
+	<h:outputScript library="js" name="script.js" />
+	<h:outputScript library="js" name="funciones.js" />
+	<h:outputStylesheet library="css" name="main.css" />
+</h:head>
+
+<h:body>
+
+	<div id="header">
+		<div class="nav-header">
+			<p>
+				<ui:insert name="nombreModulo" />
+			</p>
+			<div class="usuario">
+				<p style="margin: 0px; padding: 0px; color: #CCC;">
+					<h:outputText value="#{sistemaController.nombreUsuario}" />
+				</p>
+				<p style="margin: 0px; padding: 0px;">
+					<a href="#" onclick="javascript: window.close();">cerrar</a>
+				</p>
+			</div>
+		</div>
+
+	</div>
+
+	<div id="content">
+		<ui:insert name="contenido" />
+	</div>
+
+	<ui:insert name="evento">
+		<p:ajaxStatus onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();" />
+
+		<p:dialog modal="true" widgetVar="statusDialog" header="Status" draggable="false" closable="false">
+			<p:graphicImage value="/resources/img/ajaxloadingbar.gif" />
+		</p:dialog>
+	</ui:insert>
+
+</h:body>
+</html>

@@ -1,0 +1,164 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	template="/WEB-INF/templates/templateMenu.xhtml"
+	xmlns:p="http://primefaces.org/ui">
+	<ui:define name="titulo">
+		<h:outputText value="Usuario" />
+	</ui:define>
+
+	<ui:define name="nombreModulo">Usuario</ui:define>
+
+	<ui:define name="menuModulo">
+		<!-- 
+		<p:tieredMenu widgetVar="tmenu" binding="#{mainPageController.menuParametros}" style="width:96%;" /> -->
+	</ui:define>
+
+	<ui:define name="contenido">
+
+		<h:outputStylesheet>
+			.test{
+			color:red;
+			}
+		</h:outputStylesheet>
+
+		<h4 class="rutaPagina">Usuario</h4>
+		<p:separator styleClass="separador" />
+
+		<p class="subtitulo">
+			<h:outputText value="Busqueda" />
+		</p>
+
+		<h:form id="form1">
+			<p:growl id="growl" showDetail="true" sticky="true" />
+
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade"
+				message="Esta Seguro?">
+				<p:commandButton value="Yes" type="button"
+					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+				<p:commandButton value="No" type="button"
+					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+			</p:confirmDialog>
+
+			<p:commandButton value="buscar" action="#{usuarioCtrl.find}"
+				process="@(#pngForm)" update=":form1:dtbUsuario "
+				icon="ui-icon-search" />
+
+			<p:spacer width="3px" />
+			<p:commandButton value="Nuevo" action="#{usuarioCtrl.nuevo}"
+				process="@this" oncomplete="PF('dlg2').show();"
+				update="@widgetVar(dlg2)" icon="ui-icon-plusthick" />
+
+
+
+			<p class="subtitulo">
+				<h:outputText value="Resultado" />
+			</p>
+
+
+			<p:dataTable var="p" value="#{usuarioCtrl.usuarioList}"
+				id="dtbUsuario" widgetVar="w_dtbUsuario"
+				emptyMessage="#{msg['mensaje.empty']}" paginator="true"
+				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				rows="20" paginatorPosition="bottom" scrollable="true"
+				scrollWidth="100%" style="width:100%;">
+				<p:column headerText="OPC" style="width:40px;">
+					<p:spacer width="10px" />
+					<p:commandButton icon="ui-icon-pencil" action="#{usuarioCtrl.edit}"
+						process="@this" oncomplete="PF('dlg2').show();"
+						update="@widgetVar(dlg2)" styleClass="dtb" title="Editar">
+						<f:setPropertyActionListener value="#{p}"
+							target="#{usuarioCtrl.usuario}" />
+					</p:commandButton>
+					<p:spacer width="3px" />
+					<p:commandButton icon="ui-icon-circle-close"
+						action="#{usuarioCtrl.remove}" process="@this" update="dtbUsuario"
+						styleClass="dtb" title="Eliminar">
+						<f:setPropertyActionListener value="#{p}"
+							target="#{usuarioCtrl.usuario}" />
+						<p:confirm header="#{msg['label.confirmacion']}"
+							message="desea eliminar el registro" icon="ui-icon-alert" />
+
+					</p:commandButton>
+				</p:column>
+
+				<p:column headerText="ID" style="width:15px;">
+					<h:outputText value="#{p.usrId}" />
+				</p:column>
+
+				<p:column headerText="NOMBRE" style="width:20px;">
+					<h:outputText value="#{p.usrNombre}" />
+				</p:column>
+
+				<p:column headerText="EMAIL" style="width:20px;">
+					<h:outputText value="#{p.usrEmail}" />
+				</p:column>
+
+				<p:column headerText="IDENTIFICACION" style="width:20px;">
+					<h:outputText value="#{p.usrIdentificacion}" />
+				</p:column>
+
+				<p:column headerText="TIPO" style="width:20px;">
+					<h:outputText value="#{p.usrTipo}" />
+				</p:column>
+
+			</p:dataTable>
+		</h:form>
+
+		<p:dialog id="modalDialog" header="Agregar / Editar Usuario"
+			widgetVar="dlg2" modal="true" height="190" width="400"
+			closeOnEscape="true" resizable="false">
+			<h:form id="form2">
+				<p:messages id="msgGuardar" showDetail="false" autoUpdate="true"
+					closable="true" globalOnly="true" />
+				<h:panelGrid columns="2" style="width:100%"
+					columnClasses="colForm1,colForm2" styleClass="panelGridForm"
+					id="pngForm2">
+					<h:outputText value="#{msg['form.id']} : " />
+					<h:outputText value="#{usuarioCtrl.usuario.usrId}" />
+
+					<h:outputText value="Nombre : " />
+					<h:panelGroup>
+						<h:inputText value="#{usuarioCtrl.usuario.usrNombre}"
+							styleClass="w100" maxlength="10" id="inpNombre" />
+						<p:message for="inpNombre" style="color:red;" />
+					</h:panelGroup>
+
+					<h:outputText value="Identificación : " />
+					<h:panelGroup>
+						<h:inputText value="#{usuarioCtrl.usuario.usrIdentificacion}"
+							styleClass="w100" maxlength="10" id="inpIdentificacion" />
+						<p:message for="inpIdentificacion" style="color:red;" />
+					</h:panelGroup>
+
+					<h:outputText value="Email : " />
+					<h:panelGroup>
+						<h:inputText value="#{usuarioCtrl.usuario.usrEmail}"
+							styleClass="w100" maxlength="10" id="inpEmail" />
+						<p:message for="inpEmail" style="color:red;" />
+					</h:panelGroup>
+
+					<h:outputText value="Tipo : " />
+					<h:panelGroup>
+						<h:inputText value="#{usuarioCtrl.usuario.usrTipo}"
+							styleClass="w100" maxlength="10" id="inpTipo" />
+						<p:message for="inpTipo" style="color:red;" />
+					</h:panelGroup>
+
+				</h:panelGrid>
+				<div class="divBotonModal">
+					<p:commandButton id="cmdGuardar" value="#{msg.boton_guardar}"
+						action="#{usuarioCtrl.save}" icon="ui-icon-disk"
+						update="pngForm2 @widgetVar(w_dtbUsuario)" process="@(#pngForm2)"
+						oncomplete="validarPopUp(args,'dlg2')" />
+					<p:spacer width="3px" />
+					<p:commandButton id="cmdCancelar" value="#{msg.boton_cancelar}"
+						icon="ui-icon-cancel" process="@this"
+						oncomplete="PF('dlg2').hide();" />
+				</div>
+			</h:form>
+		</p:dialog>
+	</ui:define>
+</ui:composition>
