@@ -10,6 +10,8 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
+import org.primefaces.context.RequestContext;
+
 import edu.uam.biblioteca.persistencia.Usuario;
 import edu.uam.biblioteca.servicio.impl.UsuarioServicio;
 
@@ -52,7 +54,7 @@ public class UsuarioCtrl {
 			} catch (Throwable e) {
 				e.printStackTrace();
 				FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", e.getMessage());
-				//RequestContext.getCurrentInstance().showMessageInDialog(message);
+				RequestContext.getCurrentInstance().showMessageInDialog(message);
 			}
 		}
 	}
@@ -68,8 +70,7 @@ public class UsuarioCtrl {
 		} catch (Exception e) {
 			e.printStackTrace();
 			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", e.getMessage());
-			//RequestContext.getCurrentInstance().showMessageInDialog(message);
-			//PrimefacesUtil.validacionFallo(true);
+			RequestContext.getCurrentInstance().showMessageInDialog(message);
 		}
 	}
 
