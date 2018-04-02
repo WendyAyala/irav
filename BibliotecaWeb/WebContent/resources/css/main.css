@@ -29,3 +29,7 @@
 		rgba(65, 102, 174, 0.7));
 	height: 50px;
 }
+
+.w100{
+	width: 200px !important;
+}

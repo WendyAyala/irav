@@ -55,6 +55,7 @@
 				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 				rows="20" paginatorPosition="bottom" scrollable="true"
 				scrollWidth="100%" style="width:100%;">
+				
 				<p:column headerText="OPC" style="width:40px;">
 					<p:spacer width="10px" />
 					<p:commandButton icon="ui-icon-pencil" action="#{usuarioCtrl.edit}"
@@ -75,23 +76,23 @@
 					</p:commandButton>
 				</p:column>
 
-				<p:column headerText="ID" style="width:15px;">
-					<h:outputText value="#{p.usrId}" />
+				<p:column headerText="ID" style="width:50px;"  >
+					<h:outputText  value="#{p.usrId}" />
 				</p:column>
 
-				<p:column headerText="NOMBRE" style="width:20px;">
+				<p:column headerText="NOMBRE" style="width:120px;">
 					<h:outputText value="#{p.usrNombre}" />
 				</p:column>
 
-				<p:column headerText="EMAIL" style="width:20px;">
+				<p:column headerText="EMAIL" style="width:120px;">
 					<h:outputText value="#{p.usrEmail}" />
 				</p:column>
 
-				<p:column headerText="IDENTIFICACION" style="width:20px;">
+				<p:column headerText="IDENTIFICACION" style="width:50px;">
 					<h:outputText value="#{p.usrIdentificacion}" />
 				</p:column>
 
-				<p:column headerText="TIPO" style="width:20px;">
+				<p:column headerText="TIPO" style="width:50px;">
 					<h:outputText value="#{p.usrTipo}" />
 				</p:column>
 
@@ -107,7 +108,7 @@
 				<h:panelGrid columns="2" style="width:100%"
 					columnClasses="colForm1,colForm2" styleClass="panelGridForm"
 					id="pngForm2">
-					<h:outputText value="#{msg['form.id']} : " />
+					<h:outputText value="Id : " />
 					<h:outputText value="#{usuarioCtrl.usuario.usrId}" />
 
 					<h:outputText value="Nombre : " />
