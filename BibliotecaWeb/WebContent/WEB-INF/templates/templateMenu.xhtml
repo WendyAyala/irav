@@ -25,25 +25,35 @@
 		
 		<div id="header">
 	        <div class="nav-header">
-	        	
+	        	<!-- 
 	            <div class="showHideMenu" onclick="return showOrHideMenu('navigation','content');">
 	                <img src="${facesContext.externalContext.request.contextPath}/resources/img/img_menu.png" style="margin:0px;padding:0px;" height="36" width="36" alt="MENU PRINCIPAL"/>
 	            </div>
+	        	 -->
 	            
-	            <p><ui:insert name="nombreModulo"/></p>
 	             <div class="usuario">
-	                <p style="margin:0px;padding:0px;color:#CCC;"><h:outputText value="#{sistemaController.nombreUsuario}" /></p>
+	             	<div style="margin:0px;padding:0px; position: absolute;">Biblioteca</div>
+	             	<div style="float: right; font-style: italic; color: #275471;font-size: 25px;">WenLau</div>
+	                <!-- 
 	                <p style="margin:0px;padding:0px;"><a href="#" onclick="javascript: window.close();">cerrar</a></p>
+	                 -->
 	            </div>
 	        </div>	
 	        
 	    </div>
 
 		<div id="navigation">
-           <ui:insert name="menuModulo"/>
+           <p:menubar>
+				<p:submenu label="Opciones">
+					<p:menuitem value="External" url="http://www.primefaces.org"
+						icon="ui-icon-home" />
+					<p:menuitem value="Usuario" outcome="/paginas/usuario.jsf"
+						icon="ui-icon-star" />
+				</p:submenu>
+			</p:menubar>
         </div>
 
-		<div id="content">
+		<div id="content" class="bodyStyle">
 			<ui:insert name="contenido"/>
 		</div>	
 		

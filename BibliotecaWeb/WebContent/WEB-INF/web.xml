@@ -64,12 +64,12 @@
 		<filter-name>PrimeFaces FileUpload Filter</filter-name>
 		<servlet-name>Faces Servlet</servlet-name>
 	</filter-mapping>
-	<!-- 
+
 	<context-param>
 		<param-name>primefaces.THEME</param-name>
 		<param-value>cupertino</param-value>
 	</context-param>
-	 -->
+	 
 	<servlet-mapping>
 		<servlet-name>Faces Servlet</servlet-name>
 		<url-pattern>*.jsf</url-pattern>

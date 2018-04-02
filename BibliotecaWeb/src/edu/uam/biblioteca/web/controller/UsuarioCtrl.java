@@ -38,7 +38,6 @@ public class UsuarioCtrl {
 			find();
 		} catch (Exception e) {
 			e.printStackTrace();
-			//FacesUtil.addErrorMessage(e.getMessage());
 		}
 	}
 	

@@ -5,16 +5,11 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	template="/WEB-INF/templates/templateMenu.xhtml"
 	xmlns:p="http://primefaces.org/ui">
+
 	<ui:define name="titulo">
 		<h:outputText value="Usuario" />
 	</ui:define>
 
-	<ui:define name="nombreModulo">Usuario</ui:define>
-
-	<ui:define name="menuModulo">
-		<!-- 
-		<p:tieredMenu widgetVar="tmenu" binding="#{mainPageController.menuParametros}" style="width:96%;" /> -->
-	</ui:define>
 
 	<ui:define name="contenido">
 
@@ -24,12 +19,8 @@
 			}
 		</h:outputStylesheet>
 
-		<h4 class="rutaPagina">Usuario</h4>
+		<h4 class="subtitulo">Home / Usuario</h4>
 		<p:separator styleClass="separador" />
-
-		<p class="subtitulo">
-			<h:outputText value="Busqueda" />
-		</p>
 
 		<h:form id="form1">
 			<p:growl id="growl" showDetail="true" sticky="true" />
@@ -52,9 +43,9 @@
 				update="@widgetVar(dlg2)" icon="ui-icon-plusthick" />
 
 
-
+		<p:separator styleClass="separador" />
 			<p class="subtitulo">
-				<h:outputText value="Resultado" />
+				<h:outputText value="Listado de Usuarios" />
 			</p>
 
 

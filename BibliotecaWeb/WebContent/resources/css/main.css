@@ -1,0 +1,31 @@
+@charset "UTF-8";
+
+.subtitulo {
+	font-weight: 700;
+	margin-top: 10px;
+	color: #295c7b;
+	font-size: larger;
+}
+
+.bodyStyle {
+	padding: 10px;
+}
+
+.usuario {
+	margin: 0px;
+	color: #40424B;
+	float: left;
+	padding: 10px;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 24px;
+	position: relative;
+	width: 200px;
+}
+
+.nav-header {
+	margin-left: 0;
+	background: #77a6c5; /* For browsers that do not support gradients */
+	background: linear-gradient(to top, rgba(151, 183, 203, 0.7),
+		rgba(65, 102, 174, 0.7));
+	height: 50px;
+}
