@@ -136,5 +136,15 @@ public class Prestamo implements Serializable {
 	public void setMaterial(Material material) {
 		this.material = material;
 	}
+
+
+	public String getPreId() {
+		return preId;
+	}
+
+
+	public void setPreId(String preId) {
+		this.preId = preId;
+	}
     
 }
