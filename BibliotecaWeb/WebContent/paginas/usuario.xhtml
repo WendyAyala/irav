@@ -5,6 +5,8 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	template="/WEB-INF/templates/templateMenu.xhtml"
 	xmlns:p="http://primefaces.org/ui">
+	
+
 
 	<ui:define name="titulo">
 		<h:outputText value="Usuario" />
@@ -19,7 +21,10 @@
 			}
 		</h:outputStylesheet>
 
-		<h4 class="subtitulo">Home / Usuario</h4>
+		<p:breadCrumb>
+		    <p:menuitem value="Home" url="#" />
+		    <p:menuitem value="Usuarios" url="/paginas/usuario.jsf" class=""/>
+		</p:breadCrumb>
 		<p:separator styleClass="separador" />
 
 		<h:form id="form1">
@@ -33,7 +38,7 @@
 					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
 			</p:confirmDialog>
 
-			<p:commandButton value="buscar" action="#{usuarioCtrl.find}"
+			<p:commandButton value="Listar" action="#{usuarioCtrl.find}"
 				process="@(#pngForm)" update=":form1:dtbUsuario "
 				icon="ui-icon-search" />
 
@@ -48,15 +53,34 @@
 				<h:outputText value="Listado de Usuarios" />
 			</p>
 
-
 			<p:dataTable var="p" value="#{usuarioCtrl.usuarioList}"
 				id="dtbUsuario" widgetVar="w_dtbUsuario"
 				emptyMessage="#{msg['mensaje.empty']}" paginator="true"
 				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 				rows="20" paginatorPosition="bottom" scrollable="true"
-				scrollWidth="100%" style="width:100%;">
+				scrollWidth="100%" styleClass="table table-striped">
+
+				<p:column headerText="ID" style="width:10px" >
+					<h:outputText  value="#{p.usrId}" />
+				</p:column>
+
+				<p:column headerText="Nombre" style="width:100px;">
+					<h:outputText value="#{p.usrNombre}" />
+				</p:column>
+
+				<p:column headerText="Email" style="width:120px;">
+					<h:outputText value="#{p.usrEmail}" />
+				</p:column>
+
+				<p:column headerText="Identificación" style="width:50px;">
+					<h:outputText value="#{p.usrIdentificacion}" />
+				</p:column>
+
+				<p:column headerText="Tipo" style="width:50px;">
+					<h:outputText value="#{p.usrTipo}" />
+				</p:column>
 				
-				<p:column headerText="OPC" style="width:40px;">
+				<p:column headerText="Opciones" style="width:60px;">
 					<p:spacer width="10px" />
 					<p:commandButton icon="ui-icon-pencil" action="#{usuarioCtrl.edit}"
 						process="@this" oncomplete="PF('dlg2').show();"
@@ -75,41 +99,18 @@
 
 					</p:commandButton>
 				</p:column>
-
-				<p:column headerText="ID" style="width:50px;"  >
-					<h:outputText  value="#{p.usrId}" />
-				</p:column>
-
-				<p:column headerText="NOMBRE" style="width:120px;">
-					<h:outputText value="#{p.usrNombre}" />
-				</p:column>
-
-				<p:column headerText="EMAIL" style="width:120px;">
-					<h:outputText value="#{p.usrEmail}" />
-				</p:column>
-
-				<p:column headerText="IDENTIFICACION" style="width:50px;">
-					<h:outputText value="#{p.usrIdentificacion}" />
-				</p:column>
-
-				<p:column headerText="TIPO" style="width:50px;">
-					<h:outputText value="#{p.usrTipo}" />
-				</p:column>
-
 			</p:dataTable>
 		</h:form>
 
 		<p:dialog id="modalDialog" header="Agregar / Editar Usuario"
-			widgetVar="dlg2" modal="true" height="190" width="400"
-			closeOnEscape="true" resizable="false">
+			widgetVar="dlg2" modal="true" height="auto" width="auto"
+			closeOnEscape="true" resizable="true">
 			<h:form id="form2">
 				<p:messages id="msgGuardar" showDetail="false" autoUpdate="true"
 					closable="true" globalOnly="true" />
 				<h:panelGrid columns="2" style="width:100%"
 					columnClasses="colForm1,colForm2" styleClass="panelGridForm"
 					id="pngForm2">
-					<h:outputText value="Id : " />
-					<h:outputText value="#{usuarioCtrl.usuario.usrId}" />
 
 					<h:outputText value="Nombre : " />
 					<h:panelGroup>

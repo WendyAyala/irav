@@ -18,13 +18,14 @@
 		<h:outputScript library="js" name="script.js" />
 		<h:outputScript library="js" name="funciones.js"/>		
 		<h:outputStylesheet library="css" name="main.css" />
-			
+		
+		<link type="text/css" rel="stylesheet" href="../resources/css/bootstrap.min.css"/>
+		<h:outputStylesheet name="../resources/css/bootstrap.min.css"/>
 	</h:head>
 	
 	<h:body>
-		
 		<div id="header">
-	        <div class="nav-header">
+	        <div class="nav-header backgroundTable">
 	        	<!-- 
 	            <div class="showHideMenu" onclick="return showOrHideMenu('navigation','content');">
 	                <img src="${facesContext.externalContext.request.contextPath}/resources/img/img_menu.png" style="margin:0px;padding:0px;" height="36" width="36" alt="MENU PRINCIPAL"/>
@@ -32,8 +33,8 @@
 	        	 -->
 	            
 	             <div class="usuario">
-	             	<div style="margin:0px;padding:0px; position: absolute;">Biblioteca</div>
-	             	<div style="float: right; font-style: italic; color: #275471;font-size: 25px;">WenLau</div>
+	             	<span style="margin:0px;padding:0px; float:left;">Biblioteca</span>
+	             	<span style="float: left; font-style: italic; color: #275471;font-size: 25px;">WenLau</span>
 	                <!-- 
 	                <p style="margin:0px;padding:0px;"><a href="#" onclick="javascript: window.close();">cerrar</a></p>
 	                 -->
@@ -43,14 +44,17 @@
 	    </div>
 
 		<div id="navigation">
-           <p:menubar>
-				<p:submenu label="Opciones">
-					<p:menuitem value="External" url="http://www.primefaces.org"
-						icon="ui-icon-home" />
-					<p:menuitem value="Usuario" outcome="/paginas/usuario.jsf"
-						icon="ui-icon-star" />
-				</p:submenu>
-			</p:menubar>
+		<p:tabMenu activeIndex="#{param.i}">
+		    <p:menuitem value="Home" outcome="/paginas/main.jsf" icon="ui-icon-home">
+		        <f:param name="i" value="0" />
+		    </p:menuitem>
+		    <p:menuitem value="Libros" outcome="/paginas/usuario.jsf" icon="ui-icon-bookmark">
+		        <f:param name="i" value="1" />
+		    </p:menuitem>
+		    <p:menuitem value="Usuarios" outcome="/paginas/usuario.jsf" icon="ui-icon-person">
+		        <f:param name="i" value="2" />
+		    </p:menuitem>
+		</p:tabMenu>
         </div>
 
 		<div id="content" class="bodyStyle">
