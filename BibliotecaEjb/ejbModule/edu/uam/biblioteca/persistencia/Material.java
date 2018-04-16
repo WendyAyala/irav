@@ -26,7 +26,7 @@ import javax.xml.bind.annotation.XmlTransient;
  *
  * @author wen
  */
-@Table(name = "material", catalog = "Biblioteca", schema = "public")
+@Table(name = "material")
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @XmlRootElement

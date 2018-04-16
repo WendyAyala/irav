@@ -48,11 +48,14 @@
 		    <p:menuitem value="Home" outcome="/paginas/main.jsf" icon="ui-icon-home">
 		        <f:param name="i" value="0" />
 		    </p:menuitem>
-		    <p:menuitem value="Libros" outcome="/paginas/usuario.jsf" icon="ui-icon-bookmark">
+		    <p:menuitem value="Libros" outcome="/paginas/libro.jsf" icon="ui-icon-bookmark">
 		        <f:param name="i" value="1" />
 		    </p:menuitem>
 		    <p:menuitem value="Usuarios" outcome="/paginas/usuario.jsf" icon="ui-icon-person">
 		        <f:param name="i" value="2" />
+		    </p:menuitem>
+		    <p:menuitem value="Pr&eacute;stamo" outcome="/paginas/prestamo.jsf" icon="ui-icon-cart">
+		        <f:param name="i" value="3" />
 		    </p:menuitem>
 		</p:tabMenu>
         </div>
@@ -64,9 +67,9 @@
 		<ui:insert name="evento">
 				<p:ajaxStatus onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();"/>  
               
-			<p:dialog modal="true" widgetVar="statusDialog" header="Status"   
-			        draggable="false" closable="false">  
-			    <p:graphicImage value="/resources/img/ajaxloadingbar.gif" />  
+			<p:dialog modal="true" widgetVar="statusDialog"  
+			        draggable="false" closable="false" showHeader="false">  
+			    <p:graphicImage value="/resources/img/loader.gif" style="width: 200px;"/>  
 			</p:dialog>
 		</ui:insert>	
 	    

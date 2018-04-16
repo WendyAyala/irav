@@ -20,7 +20,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author wen
  */
 @Entity
-@Table(name = "libro", catalog = "Biblioteca", schema = "public")
+@Table(name = "libro")
 @XmlRootElement
 public class Libro extends Material implements Serializable {
 
@@ -31,10 +31,13 @@ public class Libro extends Material implements Serializable {
     private String libGenero;
     @JoinColumn(name = "aut_id", referencedColumnName = "aut_id")
     @ManyToOne
-    private Autor autId;
+    private Autor autor;
     @JoinColumn(name = "edi_id", referencedColumnName = "edi_id")
     @ManyToOne
-    private Editorial ediId;
+    private Editorial editorial;
+    
+    @Column(name = "lib_imagen", length = 50)
+    private String libImagen;
 
     public Libro() {
     }
@@ -48,21 +51,35 @@ public class Libro extends Material implements Serializable {
         this.libGenero = libGenero;
     }
 
-    public Autor getAutId() {
-        return autId;
-    }
 
-    public void setAutId(Autor autId) {
-        this.autId = autId;
-    }
+	public Autor getAutor() {
+		return autor;
+	}
 
-    public Editorial getEdiId() {
-        return ediId;
-    }
 
-    public void setEdiId(Editorial ediId) {
-        this.ediId = ediId;
-    }
+	public void setAutor(Autor autor) {
+		this.autor = autor;
+	}
+
+
+	public Editorial getEditorial() {
+		return editorial;
+	}
+
+
+	public void setEditorial(Editorial editorial) {
+		this.editorial = editorial;
+	}
+
+
+	public String getLibImagen() {
+		return libImagen;
+	}
+
+
+	public void setLibImagen(String libImagen) {
+		this.libImagen = libImagen;
+	}
 
     
 }

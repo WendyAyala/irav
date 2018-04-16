@@ -39,7 +39,7 @@ public class Autor implements Serializable {
     @Size(min = 1, max = 100)
     @Column(name = "aut_nombre", nullable = false, length = 100)
     private String autNombre;
-    @OneToMany(mappedBy = "autId")
+    @OneToMany(mappedBy = "autor")
     private List<Libro> libroList;
 
     public Autor() {

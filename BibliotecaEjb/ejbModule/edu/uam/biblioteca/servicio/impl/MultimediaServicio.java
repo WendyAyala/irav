@@ -5,24 +5,24 @@ import javax.inject.Inject;
 
 import edu.uam.biblioteca.constantes.ContadorTablaEnum;
 import edu.uam.biblioteca.dao.DaoGenericoApp;
-import edu.uam.biblioteca.dao.impl.MaterialDao;
+import edu.uam.biblioteca.dao.impl.MultimediaDao;
 import edu.uam.biblioteca.exception.DaoException;
-import edu.uam.biblioteca.persistencia.Material;
+import edu.uam.biblioteca.persistencia.Multimedia;
 import edu.uam.biblioteca.servicio.ContadorPkServicio;
 import edu.uam.biblioteca.servicio.ServicioApp;
 
 @Stateless
-public class MaterialServicio extends ServicioApp<Material, String> {
+public class MultimediaServicio extends ServicioApp<Multimedia, String> {
 
 	@Inject
-	private MaterialDao materialDao;
+	private MultimediaDao multimediaDao;
 	
 	@Inject
 	private ContadorPkServicio contadorPkServicio;
-
-	public Material findByPK(String usrId) throws DaoException {
+	
+	public Multimedia findByPK(String usrId) throws DaoException {
 		try {
-			return materialDao.findByPK(usrId);
+			return multimediaDao.findByPK(usrId);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -30,12 +30,12 @@ public class MaterialServicio extends ServicioApp<Material, String> {
 	}
 
 	@Override
-	public DaoGenericoApp<Material, String> getDao() {
-		return materialDao;
+	public DaoGenericoApp<Multimedia, String> getDao() {
+		return multimediaDao;
 	}
 	
 	@Override
-	public void save(Material o) throws DaoException {
+	public void save(Multimedia o) throws DaoException {
 		if (o.getMatId() == null) {
 			try {
 				o.setMatId(contadorPkServicio.generarContadorTabla(ContadorTablaEnum.MATERIAL));

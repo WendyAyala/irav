@@ -5,11 +5,11 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	template="/WEB-INF/templates/templateMenu.xhtml"
 	xmlns:p="http://primefaces.org/ui">
-	
+
 
 
 	<ui:define name="titulo">
-		<h:outputText value="Usuario" />
+		<h:outputText value="Libros" />
 	</ui:define>
 
 
@@ -22,8 +22,8 @@
 		</h:outputStylesheet>
 
 		<p:breadCrumb>
-		    <p:menuitem value="Home" url="#" />
-		    <p:menuitem value="Usuarios" url="/paginas/usuario.jsf" class=""/>
+			<p:menuitem value="Home" url="#" />
+			<p:menuitem value="Libros" url="/paginas/libro.jsf" class="" />
 		</p:breadCrumb>
 		<p:separator styleClass="separador" />
 
@@ -38,69 +38,65 @@
 					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
 			</p:confirmDialog>
 
-			<p:commandButton value="Listar" action="#{usuarioCtrl.find}"
-				process="@(#pngForm)" update=":form1:dtbUsuario "
+			<p:commandButton value="Listar" action="#{libroCtrl.find}"
+				process="@(#pngForm)" update="form1:carLibros "
 				icon="ui-icon-search" />
 
 			<p:spacer width="3px" />
-			<p:commandButton value="Nuevo" action="#{usuarioCtrl.nuevo}"
+			<p:commandButton value="Nuevo" action="#{libroCtrl.nuevo}"
 				process="@this" oncomplete="PF('dlg2').show();"
 				update="@widgetVar(dlg2)" icon="ui-icon-plusthick" />
 
 
-		<p:separator styleClass="separador" />
+			<p:separator styleClass="separador" />
 			<p class="subtitulo">
-				<h:outputText value="Listado de Usuarios" />
+				<h:outputText value="Listado de Libros" />
 			</p>
 
-			<p:dataTable var="p" value="#{usuarioCtrl.usuarioList}"
-				id="dtbUsuario" widgetVar="w_dtbUsuario"
-				emptyMessage="#{msg['mensaje.empty']}" paginator="true"
-				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-				rows="20" paginatorPosition="bottom" scrollable="true"
-				scrollWidth="100%" styleClass="table table-striped">
+			<p:contentFlow value="#{libroCtrl.libroList}" var="l" id="carLibros">
+				<p:graphicImage value="/resources/img/libros/#{l.libImagen}"
+					style="width: 90%;" styleClass="content" />
+				<div class="caption">
+					<p:panelGrid columns="2" style="width:100%;margin:10px 0px"
+						columnClasses="label,value" layout="grid"
+						styleClass="ui-panelgrid-blank" id="pnlCarousel">
 
-				<p:column headerText="ID" style="width:10px" >
-					<h:outputText  value="#{p.usrId}" />
-				</p:column>
+						<h:outputText value="Id" />
+						<h:outputText value="#{l.matId}" />
 
-				<p:column headerText="Nombre" style="width:100px;">
-					<h:outputText value="#{p.usrNombre}" />
-				</p:column>
+						<h:outputText value="Titulo" />
+						<h:outputText value="#{l.matNombre}" />
 
-				<p:column headerText="Email" style="width:120px;">
-					<h:outputText value="#{p.usrEmail}" />
-				</p:column>
+						<h:outputText value="Autor" />
+						<h:outputText value="#{l.autor.autNombre}" />
 
-				<p:column headerText="Identificación" style="width:50px;">
-					<h:outputText value="#{p.usrIdentificacion}" />
-				</p:column>
+						<h:outputText value="Editorial" />
+						<h:outputText value="$#{l.editorial.ediNombre}" />
 
-				<p:column headerText="Tipo" style="width:50px;">
-					<h:outputText value="#{p.usrTipo}" />
-				</p:column>
-				
-				<p:column headerText="Opciones" style="width:60px;">
-					<p:spacer width="10px" />
-					<p:commandButton icon="ui-icon-pencil" action="#{usuarioCtrl.edit}"
-						process="@this" oncomplete="PF('dlg2').show();"
-						update="@widgetVar(dlg2)" styleClass="dtb" title="Editar">
-						<f:setPropertyActionListener value="#{p}"
-							target="#{usuarioCtrl.usuario}" />
-					</p:commandButton>
-					<p:spacer width="3px" />
-					<p:commandButton icon="ui-icon-circle-close"
-						action="#{usuarioCtrl.remove}" process="@this" update="dtbUsuario"
-						styleClass="dtb" title="Eliminar">
-						<f:setPropertyActionListener value="#{p}"
-							target="#{usuarioCtrl.usuario}" />
-						<p:confirm header="#{msg['label.confirmacion']}"
-							message="Está seguro de eliminar el registro?" icon="ui-icon-alert" />
+						<p:commandButton icon="ui-icon-pencil" action="#{libroCtrl.edit}"
+							process="@this" oncomplete="PF('dlg2').show();"
+							update="@widgetVar(dlg2)" styleClass="dtb" title="Editar">
+							<f:setPropertyActionListener value="#{l}"
+								target="#{libroCtrl.libro}" />
+						</p:commandButton>
 
-					</p:commandButton>
-				</p:column>
-			</p:dataTable>
+						<p:commandButton icon="ui-icon-circle-close"
+							action="#{libroCtrl.remove}" process="@this" update="carLibros"
+							styleClass="dtb" title="Eliminar">
+							<f:setPropertyActionListener value="#{l}"
+								target="#{libroCtrl.libro}" />
+							<p:confirm header="#{msg['label.confirmacion']}"
+								message="Está seguro de eliminar el registro?" icon="ui-icon-alert" />
+
+						</p:commandButton>
+						
+					</p:panelGrid>
+				</div>
+
+			</p:contentFlow>
+
 		</h:form>
+
 
 		<p:dialog id="modalDialog" header="Agregar / Editar Usuario"
 			widgetVar="dlg2" modal="true" height="auto" width="auto"
@@ -114,36 +110,36 @@
 
 					<h:outputText value="Nombre : " />
 					<h:panelGroup>
-						<h:inputText value="#{usuarioCtrl.usuario.usrNombre}"
+						<h:inputText value="#{libroCtrl.libro.usrNombre}"
 							styleClass="w100" maxlength="100" id="inpNombre" />
 						<p:message for="inpNombre" style="color:red;" />
 					</h:panelGroup>
 
 					<h:outputText value="Identificación : " />
 					<h:panelGroup>
-						<h:inputText value="#{usuarioCtrl.usuario.usrIdentificacion}"
+						<h:inputText value="#{libroCtrl.libro.usrIdentificacion}"
 							styleClass="w100" maxlength="20" id="inpIdentificacion" />
 						<p:message for="inpIdentificacion" style="color:red;" />
 					</h:panelGroup>
 
 					<h:outputText value="Email : " />
 					<h:panelGroup>
-						<h:inputText value="#{usuarioCtrl.usuario.usrEmail}"
-							styleClass="w100" maxlength="50" id="inpEmail" />
+						<h:inputText value="#{libroCtrl.libro.usrEmail}" styleClass="w100"
+							maxlength="50" id="inpEmail" />
 						<p:message for="inpEmail" style="color:red;" />
 					</h:panelGroup>
 
 					<h:outputText value="Tipo : " />
 					<h:panelGroup>
-						<h:inputText value="#{usuarioCtrl.usuario.usrTipo}"
-							styleClass="w100" maxlength="20" id="inpTipo" />
+						<h:inputText value="#{libroCtrl.libro.usrTipo}" styleClass="w100"
+							maxlength="20" id="inpTipo" />
 						<p:message for="inpTipo" style="color:red;" />
 					</h:panelGroup>
 
 				</h:panelGrid>
 				<div class="divBotonModal">
 					<p:commandButton id="cmdGuardar" value="#{msg.boton_guardar}"
-						action="#{usuarioCtrl.save}" icon="ui-icon-disk"
+						action="#{libroCtrl.save}" icon="ui-icon-disk"
 						update="pngForm2 @widgetVar(w_dtbUsuario)" process="@(#pngForm2)"
 						oncomplete="validarPopUp(args,'dlg2')" />
 					<p:spacer width="3px" />

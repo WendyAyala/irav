@@ -40,7 +40,7 @@ public class Editorial implements Serializable {
     @Size(min = 1, max = 100)
     @Column(name = "edi_nombre", nullable = false, length = 100)
     private String ediNombre;
-    @OneToMany(mappedBy = "ediId")
+    @OneToMany(mappedBy = "editorial")
     private List<Libro> libroList;
 
     public Editorial() {

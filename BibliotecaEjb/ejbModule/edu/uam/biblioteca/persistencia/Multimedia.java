@@ -9,7 +9,6 @@ import java.io.Serializable;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
-import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -21,8 +20,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author wen
  */
 @Entity
-@Table(name = "multimedia", catalog = "Biblioteca", schema = "public")
-@DiscriminatorValue("multimedia")  
+@Table(name = "multimedia")
 @XmlRootElement
 public class Multimedia extends Material implements Serializable {
 
