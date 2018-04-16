@@ -26,6 +26,7 @@ public class LibroCtrl {
 
 	private Libro libro;
 	private List<Libro> libroList;
+	private List<Libro> libroFilterList;
 
 	public LibroCtrl() {
 	}
@@ -109,6 +110,14 @@ public class LibroCtrl {
 
 	public void setLibroList(List<Libro> libroList) {
 		this.libroList = libroList;
+	}
+
+	public List<Libro> getLibroFilterList() {
+		return libroFilterList;
+	}
+
+	public void setLibroFilterList(List<Libro> libroFilterList) {
+		this.libroFilterList = libroFilterList;
 	}
 
 
