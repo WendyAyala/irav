@@ -53,7 +53,8 @@
 				<h:outputText value="Listado de Libros" />
 			</p>
 
-			<p:contentFlow value="#{libroCtrl.libroList}" var="l" id="carLibros" style="height: 650px;">
+			<p:contentFlow value="#{libroCtrl.libroList}" var="l" id="carLibros"
+				style="height: 650px;">
 				<p:graphicImage value="/resources/img/libros/#{l.libImagen}"
 					style="width: 90%;" styleClass="content" />
 				<div class="caption">
@@ -69,7 +70,7 @@
 
 						<h:outputText value="Autor" />
 						<h:outputText value="#{l.autor.autNombre}" />
-						
+
 						<h:outputText value="G&eacute;nero" />
 						<h:outputText value="#{l.libGenero}" />
 
@@ -89,43 +90,54 @@
 							<f:setPropertyActionListener value="#{l}"
 								target="#{libroCtrl.libro}" />
 							<p:confirm header="#{msg['label.confirmacion']}"
-								message="Está seguro de eliminar el registro?" icon="ui-icon-alert" />
+								message="Está seguro de eliminar el registro?"
+								icon="ui-icon-alert" />
 
 						</p:commandButton>
-						
+
 					</p:panelGrid>
 				</div>
 
 			</p:contentFlow>
-			
-			<p:dataTable var="p" value="#{libroCtrl.libroList}"
-				id="dtbLibro" widgetVar="w_dtbLibro"
-				emptyMessage="#{msg['mensaje.empty']}" paginator="true"
-				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-				rows="20" paginatorPosition="bottom" scrollable="true" style="padding-top: 30px;"
-				scrollWidth="100%" styleClass="table table-striped" filteredValue="#{libroCtrl.libroFilterList}">
 
-				<p:column headerText="ID" style="width:10px" >
-					<h:outputText  value="#{p.matId}" />
+			<p:dataTable var="p" value="#{libroCtrl.libroList}" id="dtbLibro"
+				widgetVar="w_dtbLibro" emptyMessage="#{msg['mensaje.empty']}"
+				paginator="true"
+				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				rows="20" paginatorPosition="bottom" scrollable="true"
+				style="padding-top: 30px;" scrollWidth="100%"
+				styleClass="table table-striped"
+				filteredValue="#{libroCtrl.libroFilterList}">
+
+				<p:column headerText="ID" style="width:10px">
+					<h:outputText value="#{p.matId}" />
 				</p:column>
 
-				<p:column headerText="Nombre" style="width:100px;" filterBy="#{p.matNombre}" filterMatchMode="contains">
+				<p:column headerText="Nombre" style="width:100px;"
+					filterBy="#{p.matNombre}" filterMatchMode="contains">
 					<h:outputText value="#{p.matNombre}" />
 				</p:column>
 
-				<p:column headerText="Autor" style="width:120px;" filterBy="#{p.autor.autNombre}" filterMatchMode="contains">
+				<p:column headerText="Autor" style="width:120px;"
+					filterBy="#{p.autor.autNombre}" filterMatchMode="contains">
 					<h:outputText value="#{p.autor.autNombre}" />
 				</p:column>
-				
-				<p:column headerText="G&eacute;nero" style="width:120px;" filterBy="#{p.libGenero}" filterMatchMode="contains">
+
+				<p:column headerText="G&eacute;nero" style="width:120px;"
+					filterBy="#{p.libGenero}" filterMatchMode="contains">
 					<h:outputText value="#{p.libGenero}" />
 				</p:column>
 
-				<p:column headerText="Editorial" style="width:50px;" filterBy="#{p.editorial.ediNombre}" filterMatchMode="contains">
+				<p:column headerText="Editorial" style="width:50px;"
+					filterBy="#{p.editorial.ediNombre}" filterMatchMode="contains">
 					<h:outputText value="#{p.editorial.ediNombre}" />
 				</p:column>
-				
-				
+
+				<p:column headerText="Cantidad" style="width:50px;">
+					<h:outputText value="#{p.matCantidad}" />
+				</p:column>
+
+
 
 				<p:column headerText="Opciones" style="width:60px;">
 					<p:spacer width="10px" />
@@ -142,12 +154,13 @@
 						<f:setPropertyActionListener value="#{p}"
 							target="#{libroCtrl.libro}" />
 						<p:confirm header="#{msg['label.confirmacion']}"
-							message="Está seguro de eliminar el registro?" icon="ui-icon-alert" />
+							message="Está seguro de eliminar el registro?"
+							icon="ui-icon-alert" />
 
 					</p:commandButton>
 				</p:column>
 			</p:dataTable>
-			
+
 		</h:form>
 
 
@@ -164,36 +177,58 @@
 					<h:outputText value="Nombre : " />
 					<h:panelGroup>
 						<h:inputText value="#{libroCtrl.libro.matNombre}"
-							styleClass="w100" maxlength="100" id="inpNombre" />
+							styleClass="w100" maxlength="100" id="inpNombre" required="true" />
 						<p:message for="inpNombre" style="color:red;" />
 					</h:panelGroup>
 
-					<h:outputText value="Identificación : " />
+					<h:outputText value="Autor : " />
 					<h:panelGroup>
-						<h:inputText value="#{libroCtrl.libro.usrIdentificacion}"
-							styleClass="w100" maxlength="20" id="inpIdentificacion" />
-						<p:message for="inpIdentificacion" style="color:red;" />
+						<p:selectOneMenu id="somAutor" value="#{libroCtrl.libro.autor}"
+							converter="omnifaces.SelectItemsConverter" styleClass="w100">
+							<f:selectItem itemLabel="Seleccione..." itemValue=""
+								noSelectionOption="true" />
+							<f:selectItems value="#{libroCtrl.autorList}" var="a"
+								itemLabel="#{a.autNombre}" itemValue="#{a}" />
+						</p:selectOneMenu>
+						<p:message for="somAutor" style="color:red;" />
 					</h:panelGroup>
-
-					<h:outputText value="Email : " />
+					
+					<h:outputText value="Editorial : " />
 					<h:panelGroup>
-						<h:inputText value="#{libroCtrl.libro.usrEmail}" styleClass="w100"
-							maxlength="50" id="inpEmail" />
-						<p:message for="inpEmail" style="color:red;" />
+						<p:selectOneMenu id="somEditorial" value="#{libroCtrl.libro.editorial}"
+							converter="omnifaces.SelectItemsConverter" styleClass="w100">
+							<f:selectItem itemLabel="Seleccione..." itemValue=""
+								noSelectionOption="true" />
+							<f:selectItems value="#{libroCtrl.editorialList}" var="e"
+								itemLabel="#{e.ediNombre}" itemValue="#{e}" />
+						</p:selectOneMenu>
+						<p:message for="somEditorial" style="color:red;" />
 					</h:panelGroup>
-
-					<h:outputText value="Tipo : " />
+					
+					<h:outputText value="G&eacute;nero : " />
 					<h:panelGroup>
-						<h:inputText value="#{libroCtrl.libro.usrTipo}" styleClass="w100"
-							maxlength="20" id="inpTipo" />
-						<p:message for="inpTipo" style="color:red;" />
+						<p:selectOneMenu id="somGenero" value="#{libroCtrl.libro.libGenero}"
+							 styleClass="w100">
+							<f:selectItem itemLabel="Seleccione..." itemValue=""
+								noSelectionOption="true" />
+							<f:selectItems value="#{libroCtrl.generoLibroEnum.generoList}" var="g"
+								itemLabel="#{g.valor}" itemValue="#{g.valor}" />
+						</p:selectOneMenu>
+						<p:message for="somGenero" style="color:red;" />
+					</h:panelGroup>
+					
+					<h:outputText value="Cantidad : " />
+					<h:panelGroup>
+						<h:inputText value="#{libroCtrl.libro.matCantidad}"
+							styleClass="w100" maxlength="10" id="inpCantidad" />
+						<p:message for="inpCantidad" style="color:red;" />
 					</h:panelGroup>
 
 				</h:panelGrid>
 				<div class="divBotonModal">
 					<p:commandButton id="cmdGuardar" value="#{msg.boton_guardar}"
 						action="#{libroCtrl.save}" icon="ui-icon-disk"
-						update="pngForm2 @widgetVar(w_dtbUsuario)" process="@(#pngForm2)"
+						update="pngForm2 @widgetVar(w_dtbLibro)" process="@(#pngForm2)"
 						oncomplete="validarPopUp(args,'dlg2')" />
 					<p:spacer width="3px" />
 					<p:commandButton id="cmdCancelar" value="#{msg.boton_cancelar}"

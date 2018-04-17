@@ -5,6 +5,7 @@ package edu.uam.biblioteca.web.controller;
 
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -28,6 +29,11 @@ public class UsuarioCtrl {
 	public UsuarioCtrl() {
 	}
 
+	@PostConstruct
+	public void init() {
+		find();
+	}
+	
 	public void save() {
 		try {
 			if (usuario.getUsrId() == null) {

@@ -14,8 +14,14 @@ import javax.faces.bean.ViewScoped;
 
 import org.primefaces.context.RequestContext;
 
+import edu.uam.biblioteca.exception.DaoException;
+import edu.uam.biblioteca.persistencia.Autor;
+import edu.uam.biblioteca.persistencia.Editorial;
 import edu.uam.biblioteca.persistencia.Libro;
+import edu.uam.biblioteca.servicio.impl.AutorServicio;
+import edu.uam.biblioteca.servicio.impl.EditorialServicio;
 import edu.uam.biblioteca.servicio.impl.LibroServicio;
+import edu.uam.biblioteca.web.constantes.GeneroLibroEnum;
 
 @ManagedBean 
 @ViewScoped
@@ -23,10 +29,20 @@ public class LibroCtrl {
 
 	@EJB
 	private LibroServicio libroServicio;
+	
+	@EJB
+	private AutorServicio autorServicio;
+	
+	@EJB
+	private EditorialServicio editorialServicio;
 
 	private Libro libro;
 	private List<Libro> libroList;
 	private List<Libro> libroFilterList;
+	private List<Autor>	autorList;
+	private List<Editorial>  editorialList;
+	
+	private GeneroLibroEnum generoLibroEnum;
 
 	public LibroCtrl() {
 	}
@@ -34,6 +50,8 @@ public class LibroCtrl {
 	@PostConstruct
 	void init() {
 		find();
+		autorList = new ArrayList<Autor>();
+		editorialList= new ArrayList<Editorial>();
 	}
 
 	public void save() {
@@ -118,6 +136,42 @@ public class LibroCtrl {
 
 	public void setLibroFilterList(List<Libro> libroFilterList) {
 		this.libroFilterList = libroFilterList;
+	}
+
+	public List<Autor> getAutorList() {
+		if(autorList == null || autorList.isEmpty())
+			try {
+				autorList = autorServicio.getAll();
+			} catch (DaoException e) {
+				e.printStackTrace();
+			}
+		return autorList;
+	}
+
+	public void setAutorList(List<Autor> autorList) {
+		this.autorList = autorList;
+	}
+
+	public List<Editorial> getEditorialList() {
+		if(editorialList == null || editorialList.isEmpty())
+			try {
+				editorialList = editorialServicio.getAll();
+			} catch (DaoException e) {
+				e.printStackTrace();
+			}
+		return editorialList;
+	}
+
+	public void setEditorialList(List<Editorial> editorialList) {
+		this.editorialList = editorialList;
+	}
+
+	public GeneroLibroEnum getGeneroLibroEnum() {
+		return generoLibroEnum;
+	}
+
+	public void setGeneroLibroEnum(GeneroLibroEnum generoLibroEnum) {
+		this.generoLibroEnum = generoLibroEnum;
 	}
 
 
