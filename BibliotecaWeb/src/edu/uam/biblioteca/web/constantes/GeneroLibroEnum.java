@@ -17,9 +17,8 @@ public enum GeneroLibroEnum {
 		return valor;
 	}
 	
-	public List<GeneroLibroEnum> getGeneroList() {
+	public static List<GeneroLibroEnum> getGeneroList() {
 		return Arrays.asList(GeneroLibroEnum.values()) ;
-		
 	}
 	
 

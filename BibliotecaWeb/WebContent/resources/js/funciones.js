@@ -54,3 +54,9 @@ function formModal(modal, facesContext) {
 
 }
 
+function clickFlow(item, e) {
+	// prevents image opening...
+	if ($(item).parent().hasClass('active')) {
+		e.stopImmediatePropagation();
+	}
+}

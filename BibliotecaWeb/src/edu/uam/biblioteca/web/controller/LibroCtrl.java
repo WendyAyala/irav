@@ -3,6 +3,8 @@
  */
 package edu.uam.biblioteca.web.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,8 +13,11 @@ import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 
+import org.apache.commons.io.FileUtils;
 import org.primefaces.context.RequestContext;
+import org.primefaces.event.FileUploadEvent;
 
 import edu.uam.biblioteca.exception.DaoException;
 import edu.uam.biblioteca.persistencia.Autor;
@@ -23,52 +28,85 @@ import edu.uam.biblioteca.servicio.impl.EditorialServicio;
 import edu.uam.biblioteca.servicio.impl.LibroServicio;
 import edu.uam.biblioteca.web.constantes.GeneroLibroEnum;
 
-@ManagedBean 
+@ManagedBean
 @ViewScoped
 public class LibroCtrl {
 
 	@EJB
 	private LibroServicio libroServicio;
-	
+
 	@EJB
 	private AutorServicio autorServicio;
-	
+
 	@EJB
 	private EditorialServicio editorialServicio;
 
 	private Libro libro;
 	private List<Libro> libroList;
 	private List<Libro> libroFilterList;
-	private List<Autor>	autorList;
-	private List<Editorial>  editorialList;
-	
-	private GeneroLibroEnum generoLibroEnum;
+	private List<Autor> autorList;
+	private List<Editorial> editorialList;
+
+	private List<GeneroLibroEnum> generoLibroEnumList;
+
+	private static final String RESOURCE_BOOK_PATH = "resources/img/libros/";
+	private static final String CLASSES_FOLDER_NAME = "WEB-INF";
+	private static final String CONTROLLER_SOURCE_PATH = LibroCtrl.class.getResource(".").getPath();
 
 	public LibroCtrl() {
 	}
-	
+
 	@PostConstruct
 	void init() {
 		find();
 		autorList = new ArrayList<Autor>();
-		editorialList= new ArrayList<Editorial>();
+		editorialList = new ArrayList<Editorial>();
+		generoLibroEnumList = GeneroLibroEnum.getGeneroList();
 	}
 
 	public void save() {
 		try {
+
+			if (libro.getFile() != null) {
+				try {
+
+					String url = (String) CONTROLLER_SOURCE_PATH.subSequence(0,
+							CONTROLLER_SOURCE_PATH.indexOf(CLASSES_FOLDER_NAME)) + RESOURCE_BOOK_PATH
+							+ libro.getLibImagen();
+					File file = new File(url);
+
+					FileUtils.copyInputStreamToFile(libro.getFile(), file);
+
+				} catch (IOException e) {
+
+					FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR",
+							"Error al cargar el archivo");
+					RequestContext.getCurrentInstance().showMessageInDialog(message);
+				}
+			}
+
 			if (libro.getMatId() == null) {
 				libroServicio.save(libro);
 			} else {
 				libroServicio.update(libro);
 			}
+
 			find();
 		} catch (Exception e) {
 			e.printStackTrace();
+			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", e.getMessage());
+			RequestContext.getCurrentInstance().showMessageInDialog(message);
 		}
 	}
+
+	public void seleccionar() {
+		String claveLibro = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("id");
+		libro = libroList.stream().filter(l-> l.getMatId().equals(claveLibro)).findFirst().get();
+	}
 	
-	public void edit() {
-		
+	public void removeImgContent() {
+		seleccionar();
+		remove();
 	}
 
 	public void remove() {
@@ -97,6 +135,21 @@ public class LibroCtrl {
 			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", e.getMessage());
 			RequestContext.getCurrentInstance().showMessageInDialog(message);
 		}
+	}
+
+	public void handleFileUpload(FileUploadEvent event) {
+		if (libro != null) {
+			try {
+				libro.setFile(event.getFile().getInputstream());
+				libro.setLibImagen(event.getFile().getFileName());
+				FacesMessage message = new FacesMessage("Succesful", event.getFile().getFileName() + " is uploaded.");
+				FacesContext.getCurrentInstance().addMessage(null, message);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+
+		}
+
 	}
 
 	/**
@@ -139,7 +192,7 @@ public class LibroCtrl {
 	}
 
 	public List<Autor> getAutorList() {
-		if(autorList == null || autorList.isEmpty())
+		if (autorList == null || autorList.isEmpty())
 			try {
 				autorList = autorServicio.getAll();
 			} catch (DaoException e) {
@@ -153,7 +206,7 @@ public class LibroCtrl {
 	}
 
 	public List<Editorial> getEditorialList() {
-		if(editorialList == null || editorialList.isEmpty())
+		if (editorialList == null || editorialList.isEmpty())
 			try {
 				editorialList = editorialServicio.getAll();
 			} catch (DaoException e) {
@@ -166,14 +219,12 @@ public class LibroCtrl {
 		this.editorialList = editorialList;
 	}
 
-	public GeneroLibroEnum getGeneroLibroEnum() {
-		return generoLibroEnum;
+	public List<GeneroLibroEnum> getGeneroLibroEnumList() {
+		return generoLibroEnumList;
 	}
 
-	public void setGeneroLibroEnum(GeneroLibroEnum generoLibroEnum) {
-		this.generoLibroEnum = generoLibroEnum;
+	public void setGeneroLibroEnumList(List<GeneroLibroEnum> generoLibroEnumList) {
+		this.generoLibroEnumList = generoLibroEnumList;
 	}
-
-
 
 }

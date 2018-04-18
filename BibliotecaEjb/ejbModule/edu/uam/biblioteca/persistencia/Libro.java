@@ -5,6 +5,8 @@
  */
 package edu.uam.biblioteca.persistencia;
 
+import java.io.File;
+import java.io.InputStream;
 import java.io.Serializable;
 
 import javax.persistence.Column;
@@ -12,6 +14,7 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -38,7 +41,10 @@ public class Libro extends Material implements Serializable {
     
     @Column(name = "lib_imagen", length = 50)
     private String libImagen;
-
+    
+    @Transient
+    private InputStream file;
+    
     public Libro() {
     }
 
@@ -80,6 +86,18 @@ public class Libro extends Material implements Serializable {
 	public void setLibImagen(String libImagen) {
 		this.libImagen = libImagen;
 	}
+
+
+	public InputStream getFile() {
+		return file;
+	}
+
+
+	public void setFile(InputStream file) {
+		this.file = file;
+	}
+
+
 
     
 }

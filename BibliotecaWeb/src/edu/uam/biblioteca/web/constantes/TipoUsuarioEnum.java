@@ -17,7 +17,7 @@ public enum TipoUsuarioEnum {
 		return valor;
 	}
 	
-	public List<TipoUsuarioEnum> getTipoUsuarioList() {
+	public static List<TipoUsuarioEnum> getTipoUsuarioList() {
 		return Arrays.asList(TipoUsuarioEnum.values()) ;
 		
 	}

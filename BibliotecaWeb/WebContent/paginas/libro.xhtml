@@ -54,9 +54,11 @@
 			</p>
 
 			<p:contentFlow value="#{libroCtrl.libroList}" var="l" id="carLibros"
-				style="height: 650px;">
+				widgetVar="w_carLibros" style="height: 650px;">
 				<p:graphicImage value="/resources/img/libros/#{l.libImagen}"
-					style="width: 90%;" styleClass="content" />
+					style="width: 90%;" styleClass="content"
+					onclick="clickFlow(this, event); ">
+				</p:graphicImage>
 				<div class="caption">
 					<p:panelGrid columns="2" style="width:100%;margin:10px 0px"
 						columnClasses="label,value" layout="grid"
@@ -75,24 +77,23 @@
 						<h:outputText value="#{l.libGenero}" />
 
 						<h:outputText value="Editorial" />
-						<h:outputText value="$#{l.editorial.ediNombre}" />
-
-						<p:commandButton icon="ui-icon-pencil" action="#{libroCtrl.edit}"
-							process="@this" oncomplete="PF('dlg2').show();"
+						<h:outputText value="#{l.editorial.ediNombre}" />
+						
+								
+						<p:commandButton icon="ui-icon-pencil" 
+							action="#{libroCtrl.seleccionar}" oncomplete="PF('dlg2').show();"
 							update="@widgetVar(dlg2)" styleClass="dtb" title="Editar">
-							<f:setPropertyActionListener value="#{l}"
-								target="#{libroCtrl.libro}" />
+							<f:param name="id" value="#{l.matId}" />
 						</p:commandButton>
 
 						<p:commandButton icon="ui-icon-circle-close"
-							action="#{libroCtrl.remove}" process="@this" update="carLibros"
-							styleClass="dtb" title="Eliminar">
-							<f:setPropertyActionListener value="#{l}"
-								target="#{libroCtrl.libro}" />
+							action="#{libroCtrl.removeImgContent}" process="@this"
+							update="dtbLibro @widgetVar(w_carLibros)" styleClass="dtb"
+							title="Eliminar">
+							<f:param name="id" value="#{l.matId}" />
 							<p:confirm header="#{msg['label.confirmacion']}"
 								message="Está seguro de eliminar el registro?"
 								icon="ui-icon-alert" />
-
 						</p:commandButton>
 
 					</p:panelGrid>
@@ -141,16 +142,17 @@
 
 				<p:column headerText="Opciones" style="width:60px;">
 					<p:spacer width="10px" />
-					<p:commandButton icon="ui-icon-pencil" action="#{libroCtrl.edit}"
-						process="@this" oncomplete="PF('dlg2').show();"
-						update="@widgetVar(dlg2)" styleClass="dtb" title="Editar">
+					<p:commandButton icon="ui-icon-pencil" process="@this"
+						oncomplete="PF('dlg2').show();" update="@widgetVar(dlg2)"
+						styleClass="dtb" title="Editar">
 						<f:setPropertyActionListener value="#{p}"
 							target="#{libroCtrl.libro}" />
 					</p:commandButton>
 					<p:spacer width="3px" />
 					<p:commandButton icon="ui-icon-circle-close"
-						action="#{libroCtrl.remove}" process="@this" update="dtbLibro"
-						styleClass="dtb" title="Eliminar">
+						action="#{libroCtrl.remove}" process="@this"
+						update="dtbLibro @widgetVar(w_carLibros)" styleClass="dtb"
+						title="Eliminar">
 						<f:setPropertyActionListener value="#{p}"
 							target="#{libroCtrl.libro}" />
 						<p:confirm header="#{msg['label.confirmacion']}"
@@ -192,10 +194,11 @@
 						</p:selectOneMenu>
 						<p:message for="somAutor" style="color:red;" />
 					</h:panelGroup>
-					
+
 					<h:outputText value="Editorial : " />
 					<h:panelGroup>
-						<p:selectOneMenu id="somEditorial" value="#{libroCtrl.libro.editorial}"
+						<p:selectOneMenu id="somEditorial"
+							value="#{libroCtrl.libro.editorial}"
 							converter="omnifaces.SelectItemsConverter" styleClass="w100">
 							<f:selectItem itemLabel="Seleccione..." itemValue=""
 								noSelectionOption="true" />
@@ -204,19 +207,19 @@
 						</p:selectOneMenu>
 						<p:message for="somEditorial" style="color:red;" />
 					</h:panelGroup>
-					
+
 					<h:outputText value="G&eacute;nero : " />
 					<h:panelGroup>
-						<p:selectOneMenu id="somGenero" value="#{libroCtrl.libro.libGenero}"
-							 styleClass="w100">
+						<p:selectOneMenu id="somGenero"
+							value="#{libroCtrl.libro.libGenero}" styleClass="w100">
 							<f:selectItem itemLabel="Seleccione..." itemValue=""
 								noSelectionOption="true" />
-							<f:selectItems value="#{libroCtrl.generoLibroEnum.generoList}" var="g"
-								itemLabel="#{g.valor}" itemValue="#{g.valor}" />
+							<f:selectItems value="#{libroCtrl.generoLibroEnumList}" var="g"
+								itemValue="#{g.valor}" itemLabel="#{g.valor}" />
 						</p:selectOneMenu>
 						<p:message for="somGenero" style="color:red;" />
 					</h:panelGroup>
-					
+
 					<h:outputText value="Cantidad : " />
 					<h:panelGroup>
 						<h:inputText value="#{libroCtrl.libro.matCantidad}"
@@ -224,12 +227,17 @@
 						<p:message for="inpCantidad" style="color:red;" />
 					</h:panelGroup>
 
+					<h:outputText value="Portada : " />
+					<p:fileUpload fileUploadListener="#{libroCtrl.handleFileUpload}"
+						mode="advanced" dragDropSupport="false" sizeLimit="100000"
+						fileLimit="1" allowTypes="/(\.|\/)(jpe?g|png)$/" />
+
 				</h:panelGrid>
 				<div class="divBotonModal">
 					<p:commandButton id="cmdGuardar" value="#{msg.boton_guardar}"
 						action="#{libroCtrl.save}" icon="ui-icon-disk"
-						update="pngForm2 @widgetVar(w_dtbLibro)" process="@(#pngForm2)"
-						oncomplete="validarPopUp(args,'dlg2')" />
+						update="pngForm2 @widgetVar(w_dtbLibro) @widgetVar(w_carLibros)"
+						process="@(#pngForm2)" oncomplete="validarPopUp(args,'dlg2')" />
 					<p:spacer width="3px" />
 					<p:commandButton id="cmdCancelar" value="#{msg.boton_cancelar}"
 						icon="ui-icon-cancel" process="@this"
