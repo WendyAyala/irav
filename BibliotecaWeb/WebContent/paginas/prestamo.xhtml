@@ -114,7 +114,7 @@
 		</h:form>
 
 
-		<p:dialog id="modalDialog" header="Agregar Pr&eacute;stamo"
+		<p:dialog id="modalDialog" header="Agregar/Editar Pr&eacute;stamo"
 			widgetVar="dlg2" modal="true" height="auto" width="auto"
 			closeOnEscape="true" resizable="true">
 			<h:form id="form2">
@@ -128,7 +128,7 @@
 					<h:outputText value="Libro : " />
 					<h:panelGroup>
 						<p:selectOneMenu id="somLibro" disabled="#{prestamoCtrl.prestamo.preId != null}"
-							value="#{prestamoCtrl.prestamo.libro}"
+							value="#{prestamoCtrl.prestamo.material}"
 							converter="omnifaces.SelectItemsConverter" styleClass="w100">
 							<f:selectItem itemLabel="Seleccione..." itemValue=""
 								noSelectionOption="true" />
