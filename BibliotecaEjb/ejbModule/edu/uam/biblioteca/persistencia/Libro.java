@@ -48,6 +48,10 @@ public class Libro extends Material implements Serializable {
     public Libro() {
     }
 
+    @Override
+    public String toString() {
+        return "persistence.Libro[ matId=" + getMatId() + " ]";
+    }
 
     public String getLibGenero() {
         return libGenero;
