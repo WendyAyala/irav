@@ -18,6 +18,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -57,7 +58,10 @@ public class Prestamo implements Serializable {
     
     @JoinColumn(name = "usr_id", referencedColumnName = "usr_id")
     @ManyToOne
-    private Usuario usrId;
+    private Usuario usuario;
+
+    @Transient
+    private Libro libro;
 
     public Prestamo() {
     }
@@ -95,14 +99,6 @@ public class Prestamo implements Serializable {
         this.preMulta = preMulta;
     }
 
-
-    public Usuario getUsrId() {
-        return usrId;
-    }
-
-    public void setUsrId(Usuario usrId) {
-        this.usrId = usrId;
-    }
 
     @Override
     public int hashCode() {
@@ -145,6 +141,26 @@ public class Prestamo implements Serializable {
 
 	public void setPreId(String preId) {
 		this.preId = preId;
+	}
+
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
+
+
+	public Libro getLibro() {
+		return libro;
+	}
+
+
+	public void setLibro(Libro libro) {
+		this.libro = libro;
 	}
     
 }

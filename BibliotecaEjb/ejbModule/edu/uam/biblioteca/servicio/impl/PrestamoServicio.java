@@ -35,15 +35,29 @@ public class PrestamoServicio extends ServicioApp<Prestamo, String> {
 		return prestamoDao;
 	}
 	
-	@Override
-	public void save(Prestamo o) throws DaoException {
+	public boolean lend(Prestamo o) throws DaoException {
 		if (o.getPreId() == null) {
 			try {
-				o.setPreId(contadorPkServicio.generarContadorTabla(ContadorTablaEnum.PRESTAMO));
+				//TODO: verificar que se tenga la cantidad de libros disponible (no prestados) contar los prestados y sacar la diferencia de los existentes
+				if(availableBooks(o.getMaterial().getMatId())==0)
+					return false;
+				else
+					o.setPreId(contadorPkServicio.generarContadorTabla(ContadorTablaEnum.PRESTAMO));
 				super.save(o);
 			} catch (Exception e) {
 				throw new DaoException(e);
 			}
 		}
+		
+		return false;
+	}
+	
+	public void restore(Prestamo prestamo) throws DaoException{
+		//TODO elimino el registro de prestamos o lo pongo en estado entregado
+		
+	}
+	
+	public int availableBooks(String bookId) throws DaoException{
+		return 0;
 	}
 }

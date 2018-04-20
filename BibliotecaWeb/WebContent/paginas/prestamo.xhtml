@@ -9,7 +9,7 @@
 
 
 	<ui:define name="titulo">
-		<h:outputText value="Libros" />
+		<h:outputText value="Pr&eacute;stamos" />
 	</ui:define>
 
 
@@ -23,7 +23,7 @@
 
 		<p:breadCrumb>
 			<p:menuitem value="Home" url="#" />
-			<p:menuitem value="Libros" url="/paginas/libro.jsf" class="" />
+			<p:menuitem value="Pr&eacute;stamos" url="/paginas/prestamo.jsf" class="" />
 		</p:breadCrumb>
 		<p:separator styleClass="separador" />
 
@@ -31,74 +31,71 @@
 			<p:growl id="growl" showDetail="true" sticky="true" />
 
 			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade"
-				message="Esta Seguro?">
+				message="Esta seguro de eliminar el Registro?">
 				<p:commandButton value="Yes" type="button"
 					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
 				<p:commandButton value="No" type="button"
 					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
 			</p:confirmDialog>
 
-			<p:commandButton value="Listar" action="#{libroCtrl.find}"
+			<p:commandButton value="Listar" action="#{prestamoCtrl.find}"
 				process="@(#pngForm)" update="form1:carLibros "
 				icon="ui-icon-search" />
 
 			<p:spacer width="3px" />
-			<p:commandButton value="Nuevo" action="#{libroCtrl.nuevo}"
+			<p:commandButton value="Nuevo" action="#{prestamoCtrl.nuevo}"
 				process="@this" oncomplete="PF('dlg2').show();"
 				update="@widgetVar(dlg2)" icon="ui-icon-plusthick" />
 
 
 			<p:separator styleClass="separador" />
 			<p class="subtitulo">
-				<h:outputText value="Listado de Libros" />
+				<h:outputText value="Listado de Pr&eacute;stamos" />
 			</p>
+			
+			<p:dataTable var="p" value="#{prestamoCtrl.prestamoList}"
+				id="dtbPrestamo" widgetVar="w_dtbPrestamo"
+				emptyMessage="#{msg['mensaje.empty']}" paginator="true"
+				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				rows="20" paginatorPosition="bottom" scrollable="true"
+				scrollWidth="100%" styleClass="table table-striped">
 
-			<p:contentFlow value="#{libroCtrl.libroList}" var="l" id="carLibros">
-				<p:graphicImage value="/resources/img/libros/#{l.libImagen}"
-					style="width: 90%;" styleClass="content" />
-				<div class="caption">
-					<p:panelGrid columns="2" style="width:100%;margin:10px 0px"
-						columnClasses="label,value" layout="grid"
-						styleClass="ui-panelgrid-blank" id="pnlCarousel">
+				<p:column headerText="T&iacute;tulo" style="width:100px;" filterBy="#{p.material.matNombre}" filterMatchMode="contains">
+					<h:outputText value="#{p.material.matNombre}" />
+				</p:column>
 
-						<h:outputText value="Id" />
-						<h:outputText value="#{l.matId}" />
+				<p:column headerText="Usuario" style="width:120px;" filterBy="#{p.usuario.usrNombre}" filterMatchMode="contains">
+					<h:outputText value="#{p.usuario.usrNombre}" />
+				</p:column>
 
-						<h:outputText value="Titulo" />
-						<h:outputText value="#{l.matNombre}" />
+				<p:column headerText="Fecha Préstamo" style="width:50px;" filterBy="#{p.preFechaPrestamo}" filterMatchMode="contains">
+					<h:outputText value="#{p.preFechaPrestamo}" />
+				</p:column>
 
-						<h:outputText value="Autor" />
-						<h:outputText value="#{l.autor.autNombre}" />
-
-						<h:outputText value="Editorial" />
-						<h:outputText value="$#{l.editorial.ediNombre}" />
-
-						<p:commandButton icon="ui-icon-pencil" action="#{libroCtrl.edit}"
-							process="@this" oncomplete="PF('dlg2').show();"
-							update="@widgetVar(dlg2)" styleClass="dtb" title="Editar">
-							<f:setPropertyActionListener value="#{l}"
-								target="#{libroCtrl.libro}" />
-						</p:commandButton>
-
-						<p:commandButton icon="ui-icon-circle-close"
-							action="#{libroCtrl.remove}" process="@this" update="carLibros"
-							styleClass="dtb" title="Eliminar">
-							<f:setPropertyActionListener value="#{l}"
-								target="#{libroCtrl.libro}" />
-							<p:confirm header="#{msg['label.confirmacion']}"
-								message="Está seguro de eliminar el registro?" icon="ui-icon-alert" />
-
-						</p:commandButton>
-						
-					</p:panelGrid>
-				</div>
-
-			</p:contentFlow>
+				<p:column headerText="Fecha Devoluci&oacute;n" style="width:50px;" filterBy="#{p.preFechaDevolucion}" filterMatchMode="contains">
+					<h:outputText value="#{p.preFechaDevolucion}" />
+				</p:column>
+				
+				<p:column headerText="Estado" style="width:50px;" filterBy="#{p.preEstado}" filterMatchMode="contains">
+					<h:outputText value="#{p.preEstado}" />
+				</p:column>
+				
+				<p:column headerText="Opciones" style="width:60px;">
+					<p:spacer width="10px" />
+					<p:commandButton icon="ui-icon-pencil" action="#{prestamoCtrl.restore}"
+						process="@this" oncomplete="PF('dlg2').show();"
+						update="@widgetVar(dlg2)" styleClass="dtb" title="Devolver">
+						<f:setPropertyActionListener value="#{p}"
+							target="#{prestamoCtrl.prestamo}" />
+					</p:commandButton>
+					<p:spacer width="3px" />
+				</p:column>
+			</p:dataTable>
 
 		</h:form>
 
 
-		<p:dialog id="modalDialog" header="Agregar / Editar Usuario"
+		<p:dialog id="modalDialog" header="Agregar Pr&eacute;stamo"
 			widgetVar="dlg2" modal="true" height="auto" width="auto"
 			closeOnEscape="true" resizable="true">
 			<h:form id="form2">
@@ -110,28 +107,28 @@
 
 					<h:outputText value="Nombre : " />
 					<h:panelGroup>
-						<h:inputText value="#{libroCtrl.libro.usrNombre}"
+						<h:inputText value="#{prestamoCtrl.prestamo.usrNombre}"
 							styleClass="w100" maxlength="100" id="inpNombre" />
 						<p:message for="inpNombre" style="color:red;" />
 					</h:panelGroup>
 
 					<h:outputText value="Identificación : " />
 					<h:panelGroup>
-						<h:inputText value="#{libroCtrl.libro.usrIdentificacion}"
+						<h:inputText value="#{prestamoCtrl.prestamo.usrIdentificacion}"
 							styleClass="w100" maxlength="20" id="inpIdentificacion" />
 						<p:message for="inpIdentificacion" style="color:red;" />
 					</h:panelGroup>
 
 					<h:outputText value="Email : " />
 					<h:panelGroup>
-						<h:inputText value="#{libroCtrl.libro.usrEmail}" styleClass="w100"
+						<h:inputText value="#{prestamoCtrl.prestamo.usrEmail}" styleClass="w100"
 							maxlength="50" id="inpEmail" />
 						<p:message for="inpEmail" style="color:red;" />
 					</h:panelGroup>
 
 					<h:outputText value="Tipo : " />
 					<h:panelGroup>
-						<h:inputText value="#{libroCtrl.libro.usrTipo}" styleClass="w100"
+						<h:inputText value="#{prestamoCtrl.prestamo.usrTipo}" styleClass="w100"
 							maxlength="20" id="inpTipo" />
 						<p:message for="inpTipo" style="color:red;" />
 					</h:panelGroup>
@@ -139,7 +136,7 @@
 				</h:panelGrid>
 				<div class="divBotonModal">
 					<p:commandButton id="cmdGuardar" value="#{msg.boton_guardar}"
-						action="#{libroCtrl.save}" icon="ui-icon-disk"
+						action="#{prestamoCtrl.save}" icon="ui-icon-disk"
 						update="pngForm2 @widgetVar(w_dtbUsuario)" process="@(#pngForm2)"
 						oncomplete="validarPopUp(args,'dlg2')" />
 					<p:spacer width="3px" />

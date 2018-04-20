@@ -64,19 +64,19 @@
 					<h:outputText  value="#{p.usrId}" />
 				</p:column>
 
-				<p:column headerText="Nombre" style="width:100px;">
+				<p:column headerText="Nombre" style="width:100px;" filterBy="#{p.usrNombre}" filterMatchMode="contains">
 					<h:outputText value="#{p.usrNombre}" />
 				</p:column>
 
-				<p:column headerText="Email" style="width:120px;">
+				<p:column headerText="Email" style="width:120px;" filterBy="#{p.usrEmail}" filterMatchMode="contains">
 					<h:outputText value="#{p.usrEmail}" />
 				</p:column>
 
-				<p:column headerText="Identificación" style="width:50px;">
+				<p:column headerText="Identificación" style="width:50px;" filterBy="#{p.usrIdentificacion}" filterMatchMode="contains">
 					<h:outputText value="#{p.usrIdentificacion}" />
 				</p:column>
 
-				<p:column headerText="Tipo" style="width:50px;">
+				<p:column headerText="Tipo" style="width:50px;" filterBy="#{p.usrTipo}" filterMatchMode="contains">
 					<h:outputText value="#{p.usrTipo}" />
 				</p:column>
 				

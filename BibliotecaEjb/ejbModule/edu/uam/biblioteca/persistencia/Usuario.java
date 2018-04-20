@@ -50,7 +50,7 @@ public class Usuario implements Serializable {
 	@Size(max = 20)
 	@Column(name = "usr_tipo", length = 20)
 	private String usrTipo;
-	@OneToMany(mappedBy = "usrId")
+	@OneToMany(mappedBy = "usuario")
 	private List<Prestamo> prestamoList;
 
 	public Usuario() {
