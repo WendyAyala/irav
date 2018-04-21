@@ -61,8 +61,9 @@
 				rows="20" paginatorPosition="bottom" scrollable="true"
 				scrollWidth="100%" styleClass="table table-striped">
 
-				<p:column headerText="T&iacute;tulo" style="width:200px;" sortBy="#{p.material.matNombre}"
-					filterBy="#{p.material.matNombre}" filterMatchMode="contains">
+				<p:column headerText="T&iacute;tulo" style="width:200px;"
+					sortBy="#{p.material.matNombre}" filterBy="#{p.material.matNombre}"
+					filterMatchMode="contains">
 					<h:outputText value="#{p.material.matNombre}" />
 				</p:column>
 
@@ -73,14 +74,14 @@
 
 				<p:column headerText="Fecha Préstamo" style="width:100px;"
 					filterBy="#{p.preFechaPrestamo}" filterMatchMode="contains">
-					<h:outputText value="#{p.preFechaPrestamo}" >
+					<h:outputText value="#{p.preFechaPrestamo}">
 						<f:convertDateTime pattern="MM/dd/yyyy" />
 					</h:outputText>
 				</p:column>
 
 				<p:column headerText="Fecha Devoluci&oacute;n" style="width:100px;"
 					filterBy="#{p.preFechaDevolucion}" filterMatchMode="contains">
-					<h:outputText value="#{p.preFechaDevolucion}" >
+					<h:outputText value="#{p.preFechaDevolucion}">
 						<f:convertDateTime pattern="MM/dd/yyyy" />
 					</h:outputText>
 				</p:column>
@@ -102,9 +103,9 @@
 							icon="ui-icon-alert" />
 					</p:commandButton>
 					<p:spacer width="3px" />
-					<p:commandButton icon="ui-icon-transferthick-e-w"
-						process="@this" oncomplete="PF('dlg2').show();"
-						update="@widgetVar(dlg2)" styleClass="dtb" title="Extender plazo">
+					<p:commandButton icon="ui-icon-transferthick-e-w" process="@this"
+						oncomplete="PF('dlg2').show();" update="@widgetVar(dlg2)"
+						styleClass="dtb" title="Extender plazo">
 						<f:setPropertyActionListener value="#{p}"
 							target="#{prestamoCtrl.prestamo}" />
 					</p:commandButton>
@@ -127,8 +128,10 @@
 
 					<h:outputText value="Libro : " />
 					<h:panelGroup>
-						<p:selectOneMenu id="somLibro" disabled="#{prestamoCtrl.prestamo.preId != null}"
-							value="#{prestamoCtrl.prestamo.material}"
+						<p:selectOneMenu id="somLibro"
+							disabled="#{prestamoCtrl.prestamo.preId != null}"
+							value="#{prestamoCtrl.prestamo.material}" filter="true"
+							filterMatchMode="contains"
 							converter="omnifaces.SelectItemsConverter" styleClass="w100">
 							<f:selectItem itemLabel="Seleccione..." itemValue=""
 								noSelectionOption="true" />
@@ -138,34 +141,49 @@
 						<p:message for="somLibro" style="color:red;" />
 					</h:panelGroup>
 
-					<h:outputText value="Usuario : " />
+					<h:outputText value="Id Usuario : " />
 					<h:panelGroup>
-						<p:selectOneMenu id="somUsuario" disabled="#{prestamoCtrl.prestamo.preId != null}"
-							value="#{prestamoCtrl.prestamo.usuario}"
+						<p:selectOneMenu id="somUsuario"
+							disabled="#{prestamoCtrl.prestamo.preId != null}" panelStyle="width:180px"
+							value="#{prestamoCtrl.prestamo.usuario}" filter="true"
+							filterMatchMode="contains"
 							converter="omnifaces.SelectItemsConverter" styleClass="w100">
 							<f:selectItem itemLabel="Seleccione..." itemValue=""
 								noSelectionOption="true" />
 							<f:selectItems value="#{prestamoCtrl.usuarioList}" var="u"
-								itemLabel="#{u.usrNombre}" itemValue="#{u}" />
+								itemLabel="#{u.usrIdentificacion}" itemValue="#{u}" />
+							<p:column style="width:10%">
+								<h:outputText value="#{u.usrIdentificacion}" />
+							</p:column>
+							<p:column>
+								<h:outputText value="#{u.usrNombre}" />
+							</p:column>
+							<p:ajax event="change" update="form2:pnlNombreUsuario"/>
 						</p:selectOneMenu>
 						<p:message for="somUsuario" style="color:red;" />
 					</h:panelGroup>
+					<h:outputText value="Nombre Usuario : " />
+					<h:panelGroup id="pnlNombreUsuario" >
+						<h:outputText value="#{prestamoCtrl.prestamo.usuario.usrNombre}" />
+					</h:panelGroup>
 
-					<h:outputText value="Fecha Devoluci&oacute; : " />
+					<h:outputText value="Fecha Devoluci&oacute;n : " />
 					<h:panelGroup>
 						<p:calendar id="calFechasDev"
-							value="#{prestamoCtrl.prestamo.preFechaDevolucion}" mindate="#{prestamoCtrl.fechaActual}" pattern="dd-MM-yyyy"/> 
+							value="#{prestamoCtrl.prestamo.preFechaDevolucion}"
+							mindate="#{prestamoCtrl.fechaActual}" pattern="dd-MM-yyyy" />
 						<p:message for="calFechasDev" style="color:red;" />
 					</h:panelGroup>
 
 				</h:panelGrid>
+				<p:spacer width="3px" />
 				<div class="divBotonModal">
-					<p:commandButton id="cmdGuardar" value="#{msg.boton_guardar}"
+					<p:commandButton id="cmdGuardar" value="Guardar"
 						action="#{prestamoCtrl.save}" icon="ui-icon-disk"
 						update="pngForm2 @widgetVar(w_dtbPrestamo)" process="@(#pngForm2)"
 						oncomplete="validarPopUp(args,'dlg2')" />
 					<p:spacer width="3px" />
-					<p:commandButton id="cmdCancelar" value="#{msg.boton_cancelar}"
+					<p:commandButton id="cmdCancelar" value="Cancelar"
 						icon="ui-icon-cancel" process="@this"
 						oncomplete="PF('dlg2').hide();" />
 				</div>

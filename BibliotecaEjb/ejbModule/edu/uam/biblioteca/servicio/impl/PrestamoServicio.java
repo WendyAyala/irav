@@ -41,7 +41,7 @@ public class PrestamoServicio extends ServicioApp<Prestamo, String> {
 	public boolean lend(Prestamo o) throws DaoException {
 		if (o.getPreId() == null) {
 			try {
-				o.setMaterial(o.getLibro());
+				//o.setMaterial(o.getLibro());
 				if(availableBooks(o.getMaterial().getMatId())==0)
 					return false;
 				else {
