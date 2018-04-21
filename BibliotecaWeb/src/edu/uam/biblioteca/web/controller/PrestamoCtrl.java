@@ -5,9 +5,6 @@ package edu.uam.biblioteca.web.controller;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -20,9 +17,11 @@ import javax.faces.bean.ViewScoped;
 import org.primefaces.context.RequestContext;
 
 import edu.uam.biblioteca.persistencia.Libro;
+import edu.uam.biblioteca.persistencia.Multimedia;
 import edu.uam.biblioteca.persistencia.Prestamo;
 import edu.uam.biblioteca.persistencia.Usuario;
 import edu.uam.biblioteca.servicio.impl.LibroServicio;
+import edu.uam.biblioteca.servicio.impl.MultimediaServicio;
 import edu.uam.biblioteca.servicio.impl.PrestamoServicio;
 import edu.uam.biblioteca.servicio.impl.UsuarioServicio;
 
@@ -37,13 +36,18 @@ public class PrestamoCtrl {
 	private LibroServicio libroServicio;
 	
 	@EJB
+	private MultimediaServicio multimediaServicio;
+	
+	@EJB
 	private UsuarioServicio usuarioServicio;
 	
 	private Prestamo prestamo;
 	private List<Prestamo> prestamoList;
 	private List<Libro> libroList;
+	private List<Multimedia> multimediaList;
 	private List<Usuario> usuarioList;
 	private String fechaActual;
+	private boolean libro;
 	
 	public PrestamoCtrl() {
 	}
@@ -87,7 +91,17 @@ public class PrestamoCtrl {
 		}
 	}
 
-	public void nuevo() {
+	public void nuevoLibro() {
+		libro = true;
+		nuevo();
+	}
+	
+	public void nuevoMultimedia() {
+		libro = false;
+		nuevo();
+	}
+	
+	protected void nuevo() {
 		prestamo = new Prestamo();
 	}
 
@@ -152,6 +166,28 @@ public class PrestamoCtrl {
 
 	public void setFechaActual(String fechaActual) {
 		this.fechaActual = fechaActual;
+	}
+
+	public List<Multimedia> getMultimediaList() {
+		try {
+			if(multimediaList == null || multimediaList.isEmpty())
+				multimediaList = multimediaServicio.getAll();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return multimediaList;
+	}
+
+	public void setMultimediaList(List<Multimedia> multimediaList) {
+		this.multimediaList = multimediaList;
+	}
+
+	public boolean isLibro() {
+		return libro;
+	}
+
+	public void setLibro(boolean libro) {
+		this.libro = libro;
 	}
 
 

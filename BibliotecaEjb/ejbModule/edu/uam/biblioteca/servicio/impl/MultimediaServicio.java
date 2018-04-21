@@ -1,5 +1,7 @@
 package edu.uam.biblioteca.servicio.impl;
 
+import java.util.List;
+
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
@@ -44,5 +46,9 @@ public class MultimediaServicio extends ServicioApp<Multimedia, String> {
 				throw new DaoException(e);
 			}
 		}
+	}
+	
+	public List<Multimedia>getAll() throws DaoException{
+		return multimediaDao.getAll();
 	}
 }

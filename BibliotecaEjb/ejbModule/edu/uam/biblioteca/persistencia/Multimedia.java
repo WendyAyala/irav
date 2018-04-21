@@ -34,7 +34,12 @@ public class Multimedia extends Material implements Serializable {
     public Multimedia() {
     }
 
-
+    
+    @Override
+    public String toString() {
+        return "persistence.Multimedia[ matId=" + getMatId() + " ]";
+    }
+    
     public String getMulPlataforma() {
         return mulPlataforma;
     }

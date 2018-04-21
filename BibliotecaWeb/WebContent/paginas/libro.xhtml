@@ -234,12 +234,12 @@
 
 				</h:panelGrid>
 				<div class="divBotonModal">
-					<p:commandButton id="cmdGuardar" value="#{msg.boton_guardar}"
+					<p:commandButton id="cmdGuardar" value="Guardar"
 						action="#{libroCtrl.save}" icon="ui-icon-disk"
 						update="pngForm2 @widgetVar(w_dtbLibro) @widgetVar(w_carLibros)"
 						process="@(#pngForm2)" oncomplete="validarPopUp(args,'dlg2')" />
 					<p:spacer width="3px" />
-					<p:commandButton id="cmdCancelar" value="#{msg.boton_cancelar}"
+					<p:commandButton id="cmdCancelar" value="Cancelar"
 						icon="ui-icon-cancel" process="@this"
 						oncomplete="PF('dlg2').hide();" />
 				</div>

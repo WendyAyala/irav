@@ -24,8 +24,8 @@ public class MultimediaDao extends DaoGenericoApp<Multimedia, String> {
 	public List<Multimedia> getAll()throws DaoException{
 		try {
 			
-			String sql =" Select * from Multimedia";
-			return this.getEntityManager().createNativeQuery(sql).getResultList();
+			String sql =" Select m from Multimedia m";
+			return this.getEntityManager().createQuery(sql).getResultList();
 		} catch (Exception e) {
 			throw new DaoException();
 		}

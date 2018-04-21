@@ -9,7 +9,7 @@
 
 
 	<ui:define name="titulo">
-		<h:outputText value="Usuario" />
+		<h:outputText value="Multimedia" />
 	</ui:define>
 
 
@@ -23,7 +23,7 @@
 
 		<p:breadCrumb>
 		    <p:menuitem value="Home" url="#" />
-		    <p:menuitem value="Usuarios" url="/paginas/usuario.jsf" class=""/>
+		    <p:menuitem value="Multimedia" url="/paginas/multimedia.jsf" class=""/>
 		</p:breadCrumb>
 		<p:separator styleClass="separador" />
 
@@ -38,62 +38,59 @@
 					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
 			</p:confirmDialog>
 
-			<p:commandButton value="Listar" action="#{usuarioCtrl.find}"
-				process="@(#pngForm)" update=":form1:dtbUsuario "
+			<p:commandButton value="Listar" action="#{multimediaCtrl.find}"
+				process="@(#pngForm)" update=":form1:dtbMultimedia "
 				icon="ui-icon-search" />
 
 			<p:spacer width="3px" />
-			<p:commandButton value="Nuevo" action="#{usuarioCtrl.nuevo}"
+			<p:commandButton value="Nuevo" action="#{multimediaCtrl.nuevo}"
 				process="@this" oncomplete="PF('dlg2').show();"
 				update="@widgetVar(dlg2)" icon="ui-icon-plusthick" />
 
 
 		<p:separator styleClass="separador" />
 			<p class="subtitulo">
-				<h:outputText value="Listado de Usuarios" />
+				<h:outputText value="Listado de Multimedias" />
 			</p>
 
-			<p:dataTable var="p" value="#{usuarioCtrl.usuarioList}"
-				id="dtbUsuario" widgetVar="w_dtbUsuario"
+			<p:dataTable var="p" value="#{multimediaCtrl.multimediaList}"
+				id="dtbMultimedia" widgetVar="w_dtbMultimedia"
 				emptyMessage="#{msg['mensaje.empty']}" paginator="true"
 				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 				rows="20" paginatorPosition="bottom" scrollable="true"
 				scrollWidth="100%" styleClass="table table-striped">
 
-				<p:column headerText="ID" style="width:10px" >
-					<h:outputText  value="#{p.usrId}" />
+				<p:column headerText="ID" style="width:20px" >
+					<h:outputText  value="#{p.matId}" />
 				</p:column>
 
-				<p:column headerText="Nombre" style="width:100px;" filterBy="#{p.usrNombre}" filterMatchMode="contains">
-					<h:outputText value="#{p.usrNombre}" />
+				<p:column headerText="Nombre" style="width:120px;" filterBy="#{p.matNombre}" filterMatchMode="contains">
+					<h:outputText value="#{p.matNombre}" />
 				</p:column>
 
-				<p:column headerText="Email" style="width:120px;" filterBy="#{p.usrEmail}" filterMatchMode="contains">
-					<h:outputText value="#{p.usrEmail}" />
+				<p:column headerText="Plataforma" style="width:120px;" filterBy="#{p.mulPlataforma}" filterMatchMode="contains">
+					<h:outputText value="#{p.mulPlataforma}" />
 				</p:column>
 
-				<p:column headerText="Identificación" style="width:50px;" filterBy="#{p.usrIdentificacion}" filterMatchMode="contains">
-					<h:outputText value="#{p.usrIdentificacion}" />
+				<p:column headerText="Cantidad" style="width:50px;" filterBy="#{p.matCantidad}" filterMatchMode="contains">
+					<h:outputText value="#{p.matCantidad}" />
 				</p:column>
 
-				<p:column headerText="Tipo" style="width:50px;" filterBy="#{p.usrTipo}" filterMatchMode="contains">
-					<h:outputText value="#{p.usrTipo}" />
-				</p:column>
 				
 				<p:column headerText="Opciones" style="width:60px;">
 					<p:spacer width="10px" />
-					<p:commandButton icon="ui-icon-pencil" action="#{usuarioCtrl.edit}"
+					<p:commandButton icon="ui-icon-pencil"
 						process="@this" oncomplete="PF('dlg2').show();"
 						update="@widgetVar(dlg2)" styleClass="dtb" title="Editar">
 						<f:setPropertyActionListener value="#{p}"
-							target="#{usuarioCtrl.usuario}" />
+							target="#{multimediaCtrl.multimedia}" />
 					</p:commandButton>
 					<p:spacer width="3px" />
 					<p:commandButton icon="ui-icon-circle-close"
-						action="#{usuarioCtrl.remove}" process="@this" update="dtbUsuario"
+						action="#{multimediaCtrl.remove}" process="@this" update="dtbMultimedia"
 						styleClass="dtb" title="Eliminar">
 						<f:setPropertyActionListener value="#{p}"
-							target="#{usuarioCtrl.usuario}" />
+							target="#{multimediaCtrl.multimedia}" />
 						<p:confirm header="#{msg['label.confirmacion']}"
 							message="Está seguro de eliminar el registro?" icon="ui-icon-alert" />
 
@@ -102,7 +99,7 @@
 			</p:dataTable>
 		</h:form>
 
-		<p:dialog id="modalDialog" header="Agregar / Editar Usuario"
+		<p:dialog id="modalDialog" header="Agregar / Editar Multimedia"
 			widgetVar="dlg2" modal="true" height="auto" width="auto"
 			closeOnEscape="true" resizable="true">
 			<h:form id="form2">
@@ -114,37 +111,31 @@
 
 					<h:outputText value="Nombre : " />
 					<h:panelGroup>
-						<h:inputText value="#{usuarioCtrl.usuario.usrNombre}"
+						<h:inputText value="#{multimediaCtrl.multimedia.matNombre}"
 							styleClass="w100" maxlength="100" id="inpNombre" />
 						<p:message for="inpNombre" style="color:red;" />
 					</h:panelGroup>
 
-					<h:outputText value="Identificación : " />
+					<h:outputText value="Plataforma : " />
 					<h:panelGroup>
-						<h:inputText value="#{usuarioCtrl.usuario.usrIdentificacion}"
+						<h:inputText value="#{multimediaCtrl.multimedia.mulPlataforma}"
 							styleClass="w100" maxlength="20" id="inpIdentificacion" />
 						<p:message for="inpIdentificacion" style="color:red;" />
 					</h:panelGroup>
 
-					<h:outputText value="Email : " />
+					<h:outputText value="Cantidad : " />
 					<h:panelGroup>
-						<h:inputText value="#{usuarioCtrl.usuario.usrEmail}"
+						<h:inputText value="#{multimediaCtrl.multimedia.matCantidad}"
 							styleClass="w100" maxlength="50" id="inpEmail" />
 						<p:message for="inpEmail" style="color:red;" />
 					</h:panelGroup>
 
-					<h:outputText value="Tipo : " />
-					<h:panelGroup>
-						<h:inputText value="#{usuarioCtrl.usuario.usrTipo}"
-							styleClass="w100" maxlength="20" id="inpTipo" />
-						<p:message for="inpTipo" style="color:red;" />
-					</h:panelGroup>
 
 				</h:panelGrid>
 				<div class="divBotonModal">
 					<p:commandButton id="cmdGuardar" value="Guardar"
-						action="#{usuarioCtrl.save}" icon="ui-icon-disk"
-						update="pngForm2 @widgetVar(w_dtbUsuario)" process="@(#pngForm2)"
+						action="#{multimediaCtrl.save}" icon="ui-icon-disk"
+						update="pngForm2 @widgetVar(w_dtbMultimedia)" process="@(#pngForm2)"
 						oncomplete="validarPopUp(args,'dlg2')" />
 					<p:spacer width="3px" />
 					<p:commandButton id="cmdCancelar" value="Cancelar"

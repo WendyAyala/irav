@@ -30,7 +30,7 @@ public class PrestamoDao extends DaoGenericoApp<Prestamo, String> {
 	 */
 	public int availableBooks(String idLibro) throws DaoException {
 		String sql = "Select  (l.mat_cantidad-coalesce(count(p.pre_estado),0)  ) as disponible " + 
-				"from public.libro l " + 
+				"from public.material l " + 
 				"left join prestamo p on l.mat_id = p.mat_id\r\n" + 
 				"where l.mat_id = '"+ idLibro + "'and ( coalesce (p.pre_estado,'') )!= ('"+EstadoPrestamoEnum.ENTREGADO.getValor()+"') " + 
 				"group by l.mat_cantidad";
