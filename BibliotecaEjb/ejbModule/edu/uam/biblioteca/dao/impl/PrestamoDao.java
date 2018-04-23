@@ -4,8 +4,8 @@
 package edu.uam.biblioteca.dao.impl;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import edu.uam.biblioteca.constantes.EstadoPrestamoEnum;
 import edu.uam.biblioteca.dao.DaoGenericoApp;
@@ -38,6 +38,9 @@ public class PrestamoDao extends DaoGenericoApp<Prestamo, String> {
 		return  ((BigDecimal) getEntityManager().createNativeQuery(sql).getSingleResult()).intValue();
 	}
 
+	/* (non-Javadoc)
+	 * @see edu.uam.biblioteca.dao.DaoGenericoEjb#update(java.io.Serializable)
+	 */
 	@Override
 	public void update(Prestamo o) throws DaoException {
 		SimpleDateFormat dt = new SimpleDateFormat("yyyy/MM/dd"); 
@@ -45,5 +48,20 @@ public class PrestamoDao extends DaoGenericoApp<Prestamo, String> {
 				"	SET   usr_id='"+o.getUsuario().getUsrId()+"', mat_id='"+o.getMaterial().getMatId()+"',  pre_estado='"+o.getPreEstado()+"'  ,pre_fecha_prestamo='"+dt.format(o.getPreFechaPrestamo())+"', pre_fecha_devolucion='"+dt.format(o.getPreFechaDevolucion())+"', pre_multa="+o.getPreMulta()+" " + 
 				"	WHERE pre_id='"+o.getPreId()+"' ";
 		getEntityManager().createNativeQuery(sql).executeUpdate();
+	}
+	
+	/**
+	 * @param matId
+	 * @return
+	 * @throws DaoException
+	 */
+	public int exist(String matId)throws DaoException{
+		try {
+			String sql =" Select count(*) from Prestamo p where p.mat_id = '"+matId+"' ";
+			return ((BigInteger) this.getEntityManager().createNativeQuery(sql).getSingleResult()).intValue();
+		} catch (Exception e) {
+			throw new DaoException();
+		}
+		
 	}
 }

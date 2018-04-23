@@ -22,6 +22,9 @@ public class MultimediaServicio extends ServicioApp<Multimedia, String> {
 	@Inject
 	private ContadorPkServicio contadorPkServicio;
 	
+	@Inject
+	private PrestamoServicio prestamoServicio;
+	
 	public Multimedia findByPK(String usrId) throws DaoException {
 		try {
 			return multimediaDao.findByPK(usrId);
@@ -50,5 +53,17 @@ public class MultimediaServicio extends ServicioApp<Multimedia, String> {
 	
 	public List<Multimedia>getAll() throws DaoException{
 		return multimediaDao.getAll();
+	}
+	
+	@Override
+	public void remove(Multimedia o) throws DaoException {
+		final int exist = prestamoServicio.exist(o.getMatId());
+		
+		if(exist!=0)
+		{
+			throw new DaoException("El artículo se encuentra en préstamo");
+		}
+		
+		super.remove(o);
 	}
 }

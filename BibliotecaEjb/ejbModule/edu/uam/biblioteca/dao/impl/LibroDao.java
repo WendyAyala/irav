@@ -14,6 +14,7 @@ import edu.uam.biblioteca.persistencia.Libro;
  * 
  */
 public class LibroDao extends DaoGenericoApp<Libro, String> {
+	
 
 	public LibroDao() {
 		super(Libro.class);
@@ -31,7 +32,6 @@ public class LibroDao extends DaoGenericoApp<Libro, String> {
 		}
 		
 	}
-	
 
 
 }

@@ -22,6 +22,9 @@ public class LibroServicio extends ServicioApp<Libro, String> {
 	
 	@Inject
 	private ContadorPkServicio contadorPkServicio;
+	
+	@Inject
+	private PrestamoServicio prestamoServicio;
 
 	public Material findByPK(String usrId) throws DaoException {
 		try {
@@ -51,5 +54,17 @@ public class LibroServicio extends ServicioApp<Libro, String> {
 	
 	public List<Libro>getAll() throws DaoException{
 		return libroDao.getAll();
+	}
+	
+	@Override
+	public void remove(Libro o) throws DaoException {
+		final int exist = prestamoServicio.exist(o.getMatId());
+		
+		if(exist!=0)
+		{
+			throw new DaoException("El libro se encuentra en préstamo");
+		}
+		
+		super.remove(o);
 	}
 }

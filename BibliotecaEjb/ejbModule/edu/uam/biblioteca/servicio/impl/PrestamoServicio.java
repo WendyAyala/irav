@@ -73,4 +73,8 @@ public class PrestamoServicio extends ServicioApp<Prestamo, String> {
 	public void update(Prestamo o) throws DaoException {
 		prestamoDao.update(o);
 	}
+	
+	public int exist(String matId)throws DaoException{
+		return prestamoDao.exist(matId);
+	}
 }
