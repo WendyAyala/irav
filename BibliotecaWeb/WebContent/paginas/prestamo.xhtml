@@ -113,7 +113,7 @@
 					</p:commandButton>
 					<p:spacer width="3px" />
 					<p:commandButton icon="ui-icon-transferthick-e-w" process="@this"
-						oncomplete="PF('dlg2').show();" update="@widgetVar(dlg2)"
+						oncomplete="PF('dlg2').show();" update="@widgetVar(dlg2)" action="#{prestamoCtrl.extend}"
 						styleClass="dtb" title="Extender plazo">
 						<f:setPropertyActionListener value="#{p}"
 							target="#{prestamoCtrl.prestamo}" />
@@ -133,9 +133,9 @@
 				<h:panelGrid columns="2" style="width:100%"
 					columnClasses="colForm1,colForm2" styleClass="panelGridForm"
 					id="pngForm2">
-
-
-					<h:outputText value="Libro : " />
+				
+					<h:outputText value="Material : " rendered="#{!prestamoCtrl.libro}"/>
+					<h:outputText value="Libro : " rendered="#{prestamoCtrl.libro}"/>
 					<h:panelGroup rendered="#{prestamoCtrl.libro}">
 						<p:selectOneMenu id="somLibro"
 							disabled="#{prestamoCtrl.prestamo.preId != null}"

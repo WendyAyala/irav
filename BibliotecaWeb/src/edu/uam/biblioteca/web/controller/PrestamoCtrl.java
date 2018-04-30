@@ -14,6 +14,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
+import org.bouncycastle.asn1.x509.qualified.TypeOfBiometricData;
 import org.primefaces.context.RequestContext;
 
 import edu.uam.biblioteca.persistencia.Libro;
@@ -104,7 +105,16 @@ public class PrestamoCtrl {
 	protected void nuevo() {
 		prestamo = new Prestamo();
 	}
-
+	
+	public void extend() {
+		libro=false;
+		if(prestamo!=null ) {
+			if(prestamo.getMaterial() instanceof Libro)
+				libro=true;
+		}
+		
+	}
+	
 	public void find() {
 		prestamoList = new ArrayList<>();
 		try {
